@@ -1,9 +1,6 @@
-package ua.foxminded.bootstrap.bootstrap.models;
+package ua.foxminded.bootstrap.models;
 
 import java.time.Instant;
-
-import org.flywaydb.core.api.logging.Log;
-import org.flywaydb.core.api.logging.LogFactory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,15 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "timetables")
 public class Timetable implements HasId<Long> {
-
-    private static Log log = LogFactory.getLog(Group.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +23,8 @@ public class Timetable implements HasId<Long> {
     @Column(name = "lesson_num")
     private Long lessonNum;
     
-    @Column(name = "created")
-    private Instant created;
-    
-    @Column(name = "updated")
-    private Instant updated;
+    @Column(name = "date")
+    private Instant date;
     
     @OneToMany(mappedBy = "timetable")
     @JoinColumn(name = "course_ref")
@@ -60,31 +50,12 @@ public class Timetable implements HasId<Long> {
         this.lessonNum = lessonNum;
     }
 
-    @PrePersist
-    private void logNewGroupAttempt() {
-        log.info("Attempting to add new timetable with id: " + id);
-        if (this.created == null) {
-            created = Instant.now();
-            updated = created;
-        }
-    }
-
-    @PreUpdate
-    private void logGroupUpdateAttempt() {
-        log.info("Attempting to updated timetable with id: " + id);
-        this.updated = Instant.now();
-    }
-
     public Long getId() {
         return id;
     }
 
-    public Instant getCreated() {
-        return created;
-    }
-    
-    public Instant getUpdated() {
-        return updated;
+    public Instant getDate() {
+        return date;
     }
 
     public Long getLessonNum() {
@@ -111,8 +82,7 @@ public class Timetable implements HasId<Long> {
 
     @Override
     public String toString() {
-        return "Timetable [id=" + id + ", lessonNum=" + lessonNum + ", created=" + created + ", updated=" + updated
-                + "]";
+        return "Timetable [id=" + id + ", lessonNum=" + lessonNum + ", date=" + date + "]";
     }
 
     @Override

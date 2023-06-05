@@ -1,17 +1,23 @@
-package ua.foxminded.bootstrap.bootstrap.models;
+package ua.foxminded.bootstrap.models;
 
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "students")
-public class Student implements HasId<Long> {
+@Table(name = "teachers")
+@DiscriminatorValue("teacher")
+public class Teacher extends User implements HasId<Long> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,23 +26,25 @@ public class Student implements HasId<Long> {
     
     @Column(name = "first_name")
     private String firstName;
-
+    
     @Column(name = "last_name")
     private String lastName;
-
+    
     @ManyToOne
-    @JoinColumn(name = "group_ref")
-    private Group group;
-
-    public Student() {
-        
+    @JoinColumn(name = "timetable_ref")
+    private Timetable timetable;
+    
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
+    private Set<Course> courses;
+    
+    public Teacher() {
     }
-
-    public Student(String firstName, String lastName) {
+    
+    public Teacher(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+    
     @Override
     public Long getId() {
         return id;
@@ -49,14 +57,10 @@ public class Student implements HasId<Long> {
     public String getLastName() {
         return lastName;
     }
-    
-    public Group getGroup() {
-        return group;
-    }
 
     @Override
     public String toString() {
-        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "Teacher [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
     }
 
     @Override
@@ -77,7 +81,7 @@ public class Student implements HasId<Long> {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Student other = (Student) obj;
+        Teacher other = (Teacher) obj;
         if (firstName == null) {
             if (other.firstName != null)
                 return false;
@@ -94,5 +98,5 @@ public class Student implements HasId<Long> {
         } else if (!lastName.equals(other.lastName))
             return false;
         return true;
-    }
+    } 
 }

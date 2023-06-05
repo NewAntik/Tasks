@@ -1,4 +1,4 @@
-package ua.foxminded.bootstrap.bootstrap.models;
+package ua.foxminded.bootstrap.models;
 
 import java.util.Set;
 
@@ -9,49 +9,42 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "courses")
-public class Course implements HasId<Long> {
-    
+@Table(name = "groups")
+public class Group implements HasId<Long>{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "group")
+    private Set<Student> students;
     
-    @Column(name = "description")
-    private String description;
-    
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "timetable_ref")
     private Timetable timetable;
     
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "teachers_courses", joinColumns = { @JoinColumn(name = "teacher_ref") }, inverseJoinColumns = {
-            @JoinColumn(name = "course_ref") })
-    private Set<Teacher> teachers;
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
+    private Set<Course> courses;
     
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "courses_groups", joinColumns = { @JoinColumn(name = "course_ref") }, inverseJoinColumns = {
-            @JoinColumn(name = "group_ref") })
-    private Set<Group> groups;
-    
-    public Course() {
-        
+    public Group() {
+
     }
 
-    public Course(String name, String description) {
+    public Group(String name) {
         this.name = name;
-        this.description = description;
     }
-    
+
+    @Override
     public Long getId() {
         return id;
     }
@@ -60,24 +53,23 @@ public class Course implements HasId<Long> {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    
+    public Set<Student> getStudents() {
+        return students;
+    }
 
     @Override
     public String toString() {
-        return "Course [id=" + id + ", name=" + name + ", description=" + description + "]";
+        return "Group [id=" + id + ", name=" + name + "]";
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((students == null) ? 0 : students.hashCode());
         return result;
     }
 
@@ -89,12 +81,7 @@ public class Course implements HasId<Long> {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Course other = (Course) obj;
-        if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (!description.equals(other.description))
-            return false;
+        Group other = (Group) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -104,6 +91,11 @@ public class Course implements HasId<Long> {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
+            return false;
+        if (students == null) {
+            if (other.students != null)
+                return false;
+        } else if (!students.equals(other.students))
             return false;
         return true;
     }
