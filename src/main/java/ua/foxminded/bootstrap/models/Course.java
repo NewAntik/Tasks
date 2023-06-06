@@ -1,5 +1,6 @@
 package ua.foxminded.bootstrap.models;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -16,8 +17,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "courses")
-public class Course implements HasId<Long> {
+public class Course implements HasId<Long>, Serializable  {
     
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

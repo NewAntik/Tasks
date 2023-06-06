@@ -47,10 +47,14 @@ ALTER SEQUENCE rooms_id_seq
 
 CREATE TABLE timetables (
     id BIGINT NOT NULL DEFAULT nextval('timetables_id_seq'),
-    created TIMESTAMP WITH TIME ZONE,
-    updated TIMESTAMP WITH TIME ZONE,
+    date_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    CONSTRAINS BIGINT NOT NULL timetable_room_ref UNIQUE (rooms, id),
+    CONSTRAINS BIGINT NOT NULL timetable_teacher_ref UNIQUE (teachers, id),
+    CONSTRAINS BIGINT NOT NULL timetable_course_ref UNIQUE (courses, id),
+    CONSTRAINS BIGINT NOT NULL timetable_group_ref UNIQUE(groups, id),
     PRIMARY KEY(id)
 );
+
 
 ALTER SEQUENCE timetables_id_seq
     OWNED BY timetables.id;

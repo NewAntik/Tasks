@@ -1,21 +1,28 @@
 package ua.foxminded.bootstrap.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import ua.foxminded.bootstrap.models.utils.Role;
 
 @Entity(name="users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="Role_Type")
-public class User {
+public class User implements Serializable{
     
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "login")
     private String login;
     
     @Column(name = "password")
     private String passwordHash;
+    
+    private Role role;
     
     public User() {
         
@@ -24,6 +31,10 @@ public class User {
     public User(String login, String passwordHash) {
         this.login = login;
         this.passwordHash = passwordHash;
+    }
+    
+    public Role getRole() {
+        return role;
     }
 
     public String getLogin() {

@@ -1,5 +1,7 @@
 package ua.foxminded.bootstrap.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -13,8 +15,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "students")
 @DiscriminatorValue("student")
-public class Student extends User implements HasId<Long> {
+public class Student extends User implements HasId<Long>, Serializable {
     
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

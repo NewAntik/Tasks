@@ -1,5 +1,6 @@
 package ua.foxminded.bootstrap.models;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import jakarta.persistence.Column;
@@ -13,7 +14,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "timetables")
-public class Timetable implements HasId<Long> {
+public class Timetable implements HasId<Long>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
