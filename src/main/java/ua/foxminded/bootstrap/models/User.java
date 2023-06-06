@@ -1,92 +1,116 @@
 package ua.foxminded.bootstrap.models;
 
-import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import ua.foxminded.bootstrap.models.utils.Role;
 
-@Entity(name="users")
+import java.util.Objects;
+
+@Entity(name = "users")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="Role_Type")
-public class User implements Serializable{
-    
-    private static final long serialVersionUID = 1L;
+@DiscriminatorColumn(name = "role_type")
+public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
-    
+    protected Long id;
+
     @Column(name = "login")
-    private String login;
-    
+    protected String login;
+
     @Column(name = "password")
-    private String passwordHash;
-    
-    private Role role;
-    
+    protected String passwordHash;
+
+    @Enumerated(EnumType.STRING)
+    protected Role role;
+
+    @Column(name = "first_name")
+    protected String firstName;
+
+    @Column(name = "last_name")
+    protected String lastName;
+
     public User() {
-        
     }
-    
-    public User(String login, String passwordHash) {
+
+    public User(String login, String passwordHash, String firstName, String lastName) {
         this.login = login;
         this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-    
-    public Role getRole() {
-        return role;
-    }
-    
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPasswordHash() {
         return passwordHash;
     }
 
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
-    public String toString() {
-        return "User [login=" + login + ", passwordHash=" + passwordHash + "]";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((login == null) ? 0 : login.hashCode());
-        result = prime * result + ((passwordHash == null) ? 0 : passwordHash.hashCode());
-        return result;
+        return Objects.hash(id);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (login == null) {
-            if (other.login != null)
-                return false;
-        } else if (!login.equals(other.login))
-            return false;
-        if (passwordHash == null) {
-            if (other.passwordHash != null)
-                return false;
-        } else if (!passwordHash.equals(other.passwordHash))
-            return false;
-        return true;
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

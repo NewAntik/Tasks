@@ -1,4 +1,4 @@
-package ua.foxminded.bootstrap.bootstrap;
+package ua.foxminded.bootstrap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

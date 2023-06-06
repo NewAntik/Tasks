@@ -1,53 +1,42 @@
 package ua.foxminded.bootstrap.models;
 
-import java.io.Serializable;
-import java.time.Instant;
+import jakarta.persistence.*;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "timetables")
-public class Timetable implements HasId<Long>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Timetable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "lesson_num")
     private Long lessonNum;
-    
+
     @Column(name = "date")
-    private Instant date;
-    
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
+    private LocalDate date;
+
+    @ManyToOne
     @JoinColumn(name = "course_ref")
     private Course course;
-    
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
+
+    @ManyToOne
     @JoinColumn(name = "teacher_ref")
     private Teacher teacher;
-    
-    @OneToOne(cascade = CascadeType.PERSIST)
+
+    @ManyToOne
     @JoinColumn(name = "room_ref")
     private Room room;
-    
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
+
+    @ManyToOne
     @JoinColumn(name = "group_ref")
     private Group group;
-    
+
     public Timetable() {
-        
+
     }
 
     public Timetable(Long lessonNum) {
@@ -58,7 +47,7 @@ public class Timetable implements HasId<Long>, Serializable {
         return id;
     }
 
-    public Instant getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -82,7 +71,6 @@ public class Timetable implements HasId<Long>, Serializable {
         return group;
     }
 
-    
 
     @Override
     public String toString() {

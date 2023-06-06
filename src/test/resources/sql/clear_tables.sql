@@ -1,6 +1,2 @@
-DELETE FROM courses;
-DELETE FROM students;
-DELETE FROM groups;
-DELETE FROM rooms;
-DELETE FROM teachers;
-DELETE FROM timetables;
+DELETE FROM users CASCADE;
+DELETE FROM courses CASCADE;

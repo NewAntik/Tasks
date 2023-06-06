@@ -1,66 +1,49 @@
 package ua.foxminded.bootstrap.models;
 
-import java.io.Serializable;
-import java.util.Set;
+import jakarta.persistence.*;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
-public class Course implements HasId<Long>, Serializable  {
-    
-    private static final long serialVersionUID = 1L;
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "description")
     private String description;
-    
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "timetable_ref")
-    private Timetable timetable;
-    
+
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "teachers_courses", joinColumns = { @JoinColumn(name = "teacher_ref") }, inverseJoinColumns = {
-            @JoinColumn(name = "course_ref") })
+    @JoinTable(name = "teachers_courses", joinColumns = {@JoinColumn(name = "teacher_ref")}, inverseJoinColumns = {
+            @JoinColumn(name = "course_ref")})
     private Set<Teacher> teachers;
-    
+
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "courses_groups", joinColumns = { @JoinColumn(name = "course_ref") }, inverseJoinColumns = {
-            @JoinColumn(name = "group_ref") })
+    @JoinTable(name = "courses_groups", joinColumns = {@JoinColumn(name = "course_ref")}, inverseJoinColumns = {
+            @JoinColumn(name = "group_ref")})
     private Set<Group> groups;
-    
+
     public Course() {
-        
+
     }
 
     public Course(String name, String description) {
         this.name = name;
         this.description = description;
     }
-    
+
     public Course(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -73,7 +56,6 @@ public class Course implements HasId<Long>, Serializable  {
         return description;
     }
 
-    
 
     @Override
     public String toString() {
