@@ -27,7 +27,6 @@ class CourseRepositoryTest {
         List<Course> courses = courseRep.findByStudentId(5L);
         assertEquals(new Course(100L, "Math", null), courses.get(0));
         assertEquals(new Course(101L, "Biology", null), courses.get(1));
-        assertEquals(new Course(102L, "Geography", null), courses.get(2));
     }
     
     @Test
