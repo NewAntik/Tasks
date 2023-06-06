@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,7 +32,7 @@ public class Course implements HasId<Long>, Serializable  {
     @Column(name = "description")
     private String description;
     
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "timetable_ref")
     private Timetable timetable;
     
@@ -51,6 +51,12 @@ public class Course implements HasId<Long>, Serializable  {
     }
 
     public Course(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    
+    public Course(Long id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
     }

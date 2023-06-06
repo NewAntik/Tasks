@@ -8,8 +8,8 @@ CREATE SEQUENCE IF NOT EXISTS users_id_seq;
 
 CREATE TABLE users (
     id BIGINT NOT NULL DEFAULT nextval('users_id_seq'),
-    login VARCHAR (50),
-    password VARCHAR (50),
+    login VARCHAR (10),
+    password VARCHAR (4),
     PRIMARY KEY (id)
 );
 
@@ -48,13 +48,13 @@ ALTER SEQUENCE rooms_id_seq
 CREATE TABLE timetables (
     id BIGINT NOT NULL DEFAULT nextval('timetables_id_seq'),
     date_time TIMESTAMP WITH TIME ZONE NOT NULL,
-    CONSTRAINS BIGINT NOT NULL timetable_room_ref UNIQUE (rooms, id),
-    CONSTRAINS BIGINT NOT NULL timetable_teacher_ref UNIQUE (teachers, id),
-    CONSTRAINS BIGINT NOT NULL timetable_course_ref UNIQUE (courses, id),
-    CONSTRAINS BIGINT NOT NULL timetable_group_ref UNIQUE(groups, id),
-    PRIMARY KEY(id)
+    room_ref BIGINT NOT NULL,
+    teacher_ref BIGINT NOT NULL,
+    course_ref BIGINT NOT NULL,
+    group_ref BIGINT NOT NULL ,
+    PRIMARY KEY(id),
+    UNIQUE (room_ref, teacher_ref, course_ref, group_ref)
 );
-
 
 ALTER SEQUENCE timetables_id_seq
     OWNED BY timetables.id;
@@ -84,9 +84,8 @@ CREATE TABLE teachers_courses (
     UNIQUE (teacher_ref, course_ref)
 );
 
-CREATE TABLE groups_courses (
+CREATE TABLE courses_groups (
     group_ref BIGINT REFERENCES groups (id) ON DELETE CASCADE ON UPDATE CASCADE,
     course_ref BIGINT REFERENCES courses (id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE (group_ref, course_ref)
 );
-

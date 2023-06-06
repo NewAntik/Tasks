@@ -3,13 +3,14 @@ package ua.foxminded.bootstrap.models;
 import java.io.Serializable;
 import java.time.Instant;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,19 +30,19 @@ public class Timetable implements HasId<Long>, Serializable {
     @Column(name = "date")
     private Instant date;
     
-    @OneToMany(mappedBy = "timetable")
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
     @JoinColumn(name = "course_ref")
     private Course course;
     
-    @OneToMany(mappedBy = "timetable")
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
     @JoinColumn(name = "teacher_ref")
     private Teacher teacher;
     
-    @OneToMany(mappedBy = "timetable")
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "room_ref")
     private Room room;
     
-    @OneToMany(mappedBy = "timetable")
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "timetable")
     @JoinColumn(name = "group_ref")
     private Group group;
     

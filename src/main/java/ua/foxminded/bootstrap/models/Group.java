@@ -32,11 +32,11 @@ public class Group implements HasId<Long>, Serializable {
     @OneToMany(mappedBy = "group")
     private Set<Student> students;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "timetable_ref")
     private Timetable timetable;
     
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "groups",cascade = CascadeType.PERSIST)
     private Set<Course> courses;
     
     public Group() {

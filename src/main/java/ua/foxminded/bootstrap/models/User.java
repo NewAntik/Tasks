@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import ua.foxminded.bootstrap.models.utils.Role;
@@ -16,6 +17,10 @@ public class User implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Column(name = "id")
+    private Long id;
+    
     @Column(name = "login")
     private String login;
     
@@ -35,6 +40,10 @@ public class User implements Serializable{
     
     public Role getRole() {
         return role;
+    }
+    
+    public Long getId() {
+        return id;
     }
 
     public String getLogin() {

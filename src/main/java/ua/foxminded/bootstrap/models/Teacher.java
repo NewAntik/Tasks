@@ -12,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,11 +33,11 @@ public class Teacher extends User implements HasId<Long>, Serializable  {
     @Column(name = "last_name")
     private String lastName;
     
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "timetable_ref")
     private Timetable timetable;
     
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "teachers", cascade = CascadeType.PERSIST)
     private Set<Course> courses;
     
     public Teacher() {
