@@ -18,6 +18,7 @@ ALTER SEQUENCE users_id_seq
 
 CREATE TABLE students (
     id BIGINT NOT NULL DEFAULT nextval('students_id_seq') REFERENCES users (id),
+    group_ref BIGINT,
     first_name VARCHAR (50),
     last_name VARCHAR (50),
     PRIMARY KEY (id)

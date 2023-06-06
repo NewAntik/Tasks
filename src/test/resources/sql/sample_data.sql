@@ -26,12 +26,12 @@ VALUES (1, 'Larry', 'Will'),
        (4, 'Vinson', 'Collins'),
        (5, 'Roberto', 'Murphy');
 
-INSERT INTO students (id, first_name, last_name)
-VALUES (1, 'Henry', 'Grown'),
-       (2, 'Alex', 'Barlowe'),
-       (3, 'Jon', 'Caddel'),
-       (4, 'Green', 'Hart'),
-       (5, 'Ken', 'Block');
+INSERT INTO students (id, group_ref, first_name, last_name)
+VALUES (1, 5, 'Henry', 'Grown'),
+       (2, 4, 'Alex', 'Barlowe'),
+       (3, 3, 'Jon', 'Caddel'),
+       (4, 2, 'Green', 'Hart'),
+       (5, 1, 'Ken', 'Block');
        
 INSERT INTO groups (id, name)
 VALUES (1, 'AA-01'),

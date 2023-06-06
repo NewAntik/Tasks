@@ -24,6 +24,9 @@ public class Student extends User implements HasId<Long>, Serializable {
     @Column(name = "id")
     private Long id;
     
+    @Column(name = "group_ref", insertable = false, updatable = false)
+    private Long groupId;
+    
     @Column(name = "first_name")
     private String firstName;
 
@@ -47,6 +50,10 @@ public class Student extends User implements HasId<Long>, Serializable {
     public Long getId() {
         return id;
     }
+    
+    public Long getGroupId() {
+        return groupId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -62,7 +69,8 @@ public class Student extends User implements HasId<Long>, Serializable {
 
     @Override
     public String toString() {
-        return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "Student [id=" + id + ", groupId=" + groupId + ", firstName=" + firstName + ", lastName=" + lastName
+                + "]";
     }
 
     @Override
