@@ -23,10 +23,10 @@ VALUES (1, 'AA-01'),
        
 INSERT INTO users (id, login, password, role_type, role, group_ref, first_name, last_name)
 VALUES (1, 'staff', '1234', 'user', 'STAFF', null, 'Cleaning', 'Lady'),
-       (2, 'student1', '1234', 'student', 'STUDENT', 1, 'Cleaning', 'Lady'),
-       (3, 'teacher1', '1234', 'teacher', 'TEACHER', null, 'Cleaning', 'Lady'),
-       (4, 'student2', '1234', 'student', 'STUDENT', 1, 'Cleaning', 'Lady'),
-       (5, 'teacher3', '1234', 'teacher', 'TEACHER', null, 'Cleaning', 'Lady');
+       (2, 'student1', '1234', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
+       (3, 'teacher1', '1234', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
+       (4, 'student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
+       (5, 'teacher3', '1234', 'teacher', 'TEACHER', null, 'Yudong', 'Tang');
        
 INSERT INTO timetables (id, room_ref, course_ref, group_ref, teacher_ref, date, lesson_num)
 VALUES (1, 1, 100, 1, 1, '2023-06-22 19:10:25-07', 5),
