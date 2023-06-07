@@ -15,6 +15,9 @@ public class Room {
 
     @Column(name = "name")
     private String name;
+    
+    public Room() {
+    }
 
     public Room(String name) {
         this(null, name);

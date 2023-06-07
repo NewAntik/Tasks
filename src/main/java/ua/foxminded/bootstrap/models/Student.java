@@ -24,5 +24,5 @@ public class Student extends User {
 
     public Group getGroup() {
         return group;
-    }
+    } 
 }
