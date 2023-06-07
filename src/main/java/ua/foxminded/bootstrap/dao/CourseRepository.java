@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query("SELECT c FROM Course c WHERE c.name = :name ORDER BY c.id")
+    @Query("SELECT c FROM Course c WHERE c.name = :name")
     Course findByName(String name);
 
     @Query("SELECT c FROM Course c left JOIN fetch c.groups g left JOIN fetch g.students s WHERE s.id = :id")
