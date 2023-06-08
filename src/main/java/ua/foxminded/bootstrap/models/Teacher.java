@@ -32,10 +32,6 @@ public class Teacher extends User  {
         return specialization;
     }
 
-    public void setSpecialization(Set<Course> specialization) {
-        this.specialization = specialization;
-    }
-
     @Override
     public String toString() {
         return "Teacher{" +

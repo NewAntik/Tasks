@@ -20,13 +20,13 @@ public class Course {
     private String description;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "teachers_courses", joinColumns = {@JoinColumn(name = "teacher_ref")}, inverseJoinColumns = {
-            @JoinColumn(name = "course_ref")})
+    @JoinTable(name = "teachers_courses", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = 
+            @JoinColumn(name = "teacher_ref"))
     private Set<Teacher> teachers;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "courses_groups", joinColumns = {@JoinColumn(name = "course_ref")}, inverseJoinColumns = {
-            @JoinColumn(name = "group_ref")})
+    @JoinTable(name = "courses_groups", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = 
+            @JoinColumn(name = "group_ref"))
     private Set<Group> groups;
 
     public Course() {
@@ -56,6 +56,13 @@ public class Course {
         return description;
     }
 
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+    
+    public Set<Group> getGroups() {
+        return groups;
+    }
 
     @Override
     public String toString() {
