@@ -20,6 +20,18 @@ class CourseRepositoryTest {
 
     @Autowired
     CourseRepository courseRep;
+    
+    @Test
+    void findByTeacherID_ShouldReturnCourseListOfCourseReletedWithTeacherByTeacherId() {
+        List<Course> expected = List.of(
+                new Course(100L, "Math", "Math Description"),
+                new Course(101L, "Biology", "Biology Description"),
+                new Course(103L, "Music", "Music Description")
+        );
+        
+        List<Course> actual = courseRep.findByTeacherId(3L);
+        assertEquals(expected, actual);
+    }
 
     @Test
     void findByStudentId_ShouldReturnListOfCourseReletedWithStudentByStudentIdOrderedById() {
