@@ -55,19 +55,19 @@ public class Timetable {
         return lessonNum;
     }
 
-    public Course getCourses() {
+    public Course getCourse() {
         return course;
     }
 
-    public Teacher getTeachers() {
+    public Teacher getTeacher() {
         return teacher;
     }
 
-    public Room getRooms() {
+    public Room getRoom() {
         return room;
     }
 
-    public Group getGroups() {
+    public Group getGroup() {
         return group;
     }
 
