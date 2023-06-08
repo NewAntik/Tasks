@@ -31,14 +31,6 @@ VALUES (1, 'staff', '1234', 'user', 'STAFF', null, 'Cleaning', 'Lady'),
        (4, 'student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
        (5, 'teacher3', '1234', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
        (7, 'teacher7', '1237', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
-       
-INSERT INTO timetables (id, room_ref, course_ref, group_ref, teacher_ref, date, lesson_num)
-VALUES (1, 1, 100, 1, 1, '2023-06-22 19:10:25-07', 5),
-       (2, 2, 101, 2, 2, '2023-06-22 19:10:25-07', 4),
-       (3, 3, 102, 3, 4, '2023-06-22 19:10:25-07', 3),
-       (4, 4, 103, 4, 4, '2023-06-22 19:10:25-07', 6),
-       (5, 5, 104, 5, 5,'2023-06-22 19:10:25-07', 8);
-
 
 INSERT INTO teachers_courses (teacher_ref, course_ref)
 VALUES (3, 100),

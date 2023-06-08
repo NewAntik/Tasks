@@ -5,11 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.models.Timetable;
 
 @Repository
-public interface TimetableRepository extends JpaRepository<Course, Long> {
+public interface TimetableRepository extends JpaRepository<Timetable, Long> {
     
     @Query("SELECT t FROM Timetable t JOIN t.course c WHERE c.id =:id ORDER BY t.id")
     Timetable findByCourseId(@Param("id")Long id);

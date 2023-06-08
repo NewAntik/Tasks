@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.models.Teacher;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Course, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     @Query("SELECT t FROM Teacher t WHERE t.firstName = :firstName")
     Teacher findByFirstName(@Param("firstName")String name);

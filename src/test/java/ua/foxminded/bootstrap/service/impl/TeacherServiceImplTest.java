@@ -11,7 +11,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.jdbc.Sql;
 import ua.foxminded.bootstrap.dao.TeacherRepository;
 
-
 @DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {TeacherRepository.class, TeacherServiceImpl.class}))
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql(scripts = {"/sql/clear_tables.sql", "/sql/sample_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -21,7 +20,7 @@ class TeacherServiceImplTest {
     TeacherServiceImpl teacherServ;
     
     @Test
-    void add_ShouldReturnStudentByStudentFirstName() {
+    void add_ShouldTrewIllegalArgumentExceptionSpecializationDoesntExist() {
         
         Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
             teacherServ.findTeachersBySpecialization("Philosophy");     

@@ -43,6 +43,15 @@ public class Timetable {
         this.lessonNum = lessonNum;
     }
 
+    public Timetable(Room room, Group group, Teacher teacher, Course course, LocalDate date, Long lessonNum) {
+        this.room = room;
+        this.group = group;
+        this.teacher = teacher;
+        this.course = course;
+        this.date = date;
+        this.lessonNum = lessonNum;
+    }
+
     public Long getId() {
         return id;
     }
@@ -71,6 +80,29 @@ public class Timetable {
         return group;
     }
 
+    public void setLessonNum(Long lessonNum) {
+        this.lessonNum = lessonNum;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     @Override
     public String toString() {
