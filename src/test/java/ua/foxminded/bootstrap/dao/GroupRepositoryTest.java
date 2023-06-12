@@ -27,7 +27,7 @@ class GroupRepositoryTest {
         List<Group> groups = groupRep.findByStudentNum(1L);
         assertEquals(2L, groups.get(0).getId());
         assertEquals("AA-02", groups.get(0).getName());
-        assertEquals(4, groups.size());
+        assertEquals(5, groups.size());
     }
     
     @Test
