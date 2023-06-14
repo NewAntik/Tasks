@@ -48,6 +48,10 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getLogin() {
+        return login;
+    }
 
     public String getPasswordHash() {
         return passwordHash;
