@@ -70,4 +70,3 @@ CREATE TABLE timetables
     UNIQUE (date, lesson_num, course_ref),
     UNIQUE (date, lesson_num, group_ref)
 );
-
