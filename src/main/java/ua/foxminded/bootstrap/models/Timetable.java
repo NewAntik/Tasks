@@ -2,7 +2,7 @@ package ua.foxminded.bootstrap.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Entity
 @Table(name = "timetables")
@@ -17,7 +17,7 @@ public class Timetable {
     private Long lessonNum;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Instant date;
 
     @ManyToOne
     @JoinColumn(name = "course_ref")
@@ -43,7 +43,7 @@ public class Timetable {
         this.lessonNum = lessonNum;
     }
 
-    public Timetable(Room room, Group group, Teacher teacher, Course course, LocalDate date, Long lessonNum) {
+    public Timetable(Room room, Group group, Teacher teacher, Course course, Instant date, Long lessonNum) {
         this.room = room;
         this.group = group;
         this.teacher = teacher;
@@ -56,7 +56,7 @@ public class Timetable {
         return id;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return date;
     }
 
@@ -84,7 +84,7 @@ public class Timetable {
         this.lessonNum = lessonNum;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 
