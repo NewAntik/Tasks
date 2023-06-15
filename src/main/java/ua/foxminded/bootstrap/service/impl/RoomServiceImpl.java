@@ -3,10 +3,13 @@ package ua.foxminded.bootstrap.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import ua.foxminded.bootstrap.dao.RoomRepository;
 import ua.foxminded.bootstrap.models.Room;
 import ua.foxminded.bootstrap.service.RoomService;
 
+@Service
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRep;
