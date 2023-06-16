@@ -44,6 +44,14 @@ public class Group {
     public String getName() {
         return name;
     }
+    
+    public Set<Course> getCourses() {
+        return courses;
+    }
+    
+    public Set<Student> getStudents() {
+        return students;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,9 +68,6 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }
