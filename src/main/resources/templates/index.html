@@ -1,17 +1,44 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Welcome University</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Courses</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+	crossorigin="anonymous">
 </head>
+
 <body>
-	<h1>Choose some table.</h1>
-	<hr>
-	<a href="/student">[Students]</a>
-	<a href="/teacher">[Teachers]</a>
-	<a href="/course">[Courses]</a>
-	<a href="/group">[Groups]</a>
-	<a href="/room">[Rooms]</a>
-	<a href="/timetable">[Timetable]</a>
-	<hr>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary"
+		data-bs-theme="dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/index">University</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/students">Students</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/teachers">Teachers</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/courses">Courses</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/groups">Groups</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/rooms">Rooms</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/timetables">Schedule</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 </body>
 </html>

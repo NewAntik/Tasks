@@ -1,6 +1,5 @@
 package ua.foxminded.bootstrap.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -13,6 +12,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.service.CourseService;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = {CourseController.class})
 class CourseControllerTest {
@@ -27,17 +31,16 @@ class CourseControllerTest {
     void getCourseTable_shouldShowListOfCourses() throws Exception {
         when(courseServ.findAll()).thenReturn(Arrays.asList(
                new Course(100L, "Math", "Math Description"),
-               new Course(101L, "Biology", "Biology Description"),
-               new Course(102L, "Geography", "Geography Description"),
                new Course(103L, "Music", "Music Description"),
-               new Course(104L, "History", "History Description"),
-               new Course(105L, "Physics", "Physics Description"),
-               new Course(106L, "Medicine", "Medicine Description"),
-               new Course(7L, "Tehnology", "Tehnology Description")
+               new Course(105L, "Physics", "Physics Description")
         ));
-//        mvc.perform(get("/courses"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(containsString("Math")))
-//                .andExpect(content().string(containsString("Math course")));
+        mvc.perform(get("/courses"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Physics")))
+                .andExpect(content().string(containsString("Physics Description")))
+                .andExpect(content().string(containsString("Music")))
+                .andExpect(content().string(containsString("Music Description")))
+                .andExpect(content().string(containsString("Math")))
+                .andExpect(content().string(containsString("Math Description")));
     }
 }
