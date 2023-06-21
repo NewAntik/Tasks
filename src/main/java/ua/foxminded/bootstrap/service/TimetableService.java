@@ -1,7 +1,7 @@
 package ua.foxminded.bootstrap.service;
 
 import java.sql.SQLException;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -20,5 +20,5 @@ public interface TimetableService {
     void delete(Long id) throws SQLException;
     
     @Transactional
-    Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, Instant date, Long lessonNum) throws SQLException;
+    Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum) throws SQLException;
 }

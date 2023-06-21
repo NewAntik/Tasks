@@ -1,7 +1,7 @@
 package ua.foxminded.bootstrap.service.impl;
 
 import java.sql.SQLException;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, Instant date, Long lessonNum)
+    public Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum)
             throws SQLException {
         checkDataExistins(roomId, groupId, teacherId, courseId);
 

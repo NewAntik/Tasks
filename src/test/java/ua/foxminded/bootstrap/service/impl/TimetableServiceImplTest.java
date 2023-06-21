@@ -3,7 +3,7 @@ package ua.foxminded.bootstrap.service.impl;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
-import java.time.Instant;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ class TimetableServiceImplTest {
     @Test
     @Sql(scripts = {"/sql/clear_tables.sql","/sql/sample_data_without_timetable.sql"})
     void add_ShouldAddNewTimetable() throws SQLException {
-        Timetable actual = timetableServ.add(7L, 7L, 7L, 7L, Instant.now(), 5L);
+        Timetable actual = timetableServ.add(7L, 7L, 7L, 7L, LocalDate.of(2023, 1, 1), 5L);
         assertEquals(actual.getTeacher().getId(), 7);
     }
     
