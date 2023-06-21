@@ -10,3 +10,9 @@ spring:
   flyway:
     baselineOnMigrate: true
     locations: classpath:db/migration
+  thymeleaf:
+    cache=false
+    enabled=true
+    prefix=classpath:/templates/
+    suffix=.html
+    name=Bootstrap
