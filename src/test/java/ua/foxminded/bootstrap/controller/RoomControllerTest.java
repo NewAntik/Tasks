@@ -32,7 +32,7 @@ class RoomControllerTest {
         when(roomServ.findAll()).thenReturn(Arrays.asList(
                new Room("Lecture hall #1")
         ));
-        mvc.perform(get("/rooms"))
+        mvc.perform(get("/room"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Lecture hall #1")));
     }

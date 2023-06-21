@@ -33,7 +33,7 @@ class TeacherControllerTest {
                 new Teacher("local", "12345", "Gosha", "Rast"),
                 new Teacher("yammi", "54321", "Arnold", "Father")
         ));
-        mvc.perform(get("/teachers"))
+        mvc.perform(get("/teacher"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Gosha")))
                 .andExpect(content().string(containsString("Rast")))

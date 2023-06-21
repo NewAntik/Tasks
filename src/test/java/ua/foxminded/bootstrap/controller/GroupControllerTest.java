@@ -35,7 +35,7 @@ class GroupControllerTest {
                 new Group("AA-02"),
                 new Group("AA-03")
         ));
-        mvc.perform(get("/groups"))
+        mvc.perform(get("/group"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("AA-01")))
                 .andExpect(content().string(containsString("AA-02")))

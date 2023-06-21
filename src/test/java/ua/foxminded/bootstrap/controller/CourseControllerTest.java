@@ -18,15 +18,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {CourseController.class})
+@WebMvcTest(controllers = { CourseController.class })
 class CourseControllerTest {
 
     @Autowired
     private MockMvc mvc;
-    
+
     @MockBean
-    CourseService courseServ;
-    
+    private CourseService courseServ;
+
     @Test
     void getCourseTable_shouldShowListOfCourses() throws Exception {
         when(courseServ.findAll()).thenReturn(Arrays.asList(
@@ -34,7 +34,7 @@ class CourseControllerTest {
                new Course(103L, "Music", "Music Description"),
                new Course(105L, "Physics", "Physics Description")
         ));
-        mvc.perform(get("/courses"))
+        mvc.perform(get("/course"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Physics")))
                 .andExpect(content().string(containsString("Physics Description")))

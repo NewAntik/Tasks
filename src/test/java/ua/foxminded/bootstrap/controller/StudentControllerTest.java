@@ -34,7 +34,7 @@ class StudentControllerTest {
                new Student("local", "12345", "Gosha", "Rast", new Group()),
                new Student("yammi", "54321", "Arnold", "Father", new Group())
         ));
-        mvc.perform(get("/students"))
+        mvc.perform(get("/student"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Father")))
                 .andExpect(content().string(containsString("Arnold")))
