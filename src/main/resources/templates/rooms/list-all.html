@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}"/>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/general::navbar}"/>
+</div>
+	<div style="height: 100px;"></div>
+	<div class="grid text-center">
+		<p class="text-success" style="font-size: 45px;">Rooms</p>
+	</div>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<table class="table table-success table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="room : ${rooms}">
+							<td th:text="${room.id}"></td>
+							<td th:text="${room.name}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

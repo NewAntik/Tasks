@@ -59,15 +59,14 @@ CREATE TABLE timetables
 (
     id          BIGINT                   NOT NULL DEFAULT nextval('timetables_id_seq'),
     lesson_num  BIGINT                   not null,
-    date        TIMESTAMP WITH TIME ZONE NOT NULL,
+    date_ref    DATE                     NOT NULL,
     room_ref    BIGINT                   NOT NULL references rooms (id) on DELETE cascade,
     teacher_ref BIGINT                   NOT NULL references users (id) on DELETE cascade,
     course_ref  BIGINT                   NOT NULL references courses (id) on DELETE cascade,
     group_ref   BIGINT                   NOT NULL references groups (id) on DELETE cascade,
     PRIMARY KEY (id),
-    UNIQUE (date, lesson_num, room_ref),
-    UNIQUE (date, lesson_num, teacher_ref),
-    UNIQUE (date, lesson_num, course_ref),
-    UNIQUE (date, lesson_num, group_ref)
+    UNIQUE (date_ref, lesson_num, room_ref),
+    UNIQUE (date_ref, lesson_num, teacher_ref),
+    UNIQUE (date_ref, lesson_num, course_ref),
+    UNIQUE (date_ref, lesson_num, group_ref)
 );
-

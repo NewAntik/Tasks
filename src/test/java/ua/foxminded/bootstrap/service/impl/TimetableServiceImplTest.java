@@ -30,7 +30,7 @@ class TimetableServiceImplTest {
     @Test
     @Sql(scripts = {"/sql/clear_tables.sql","/sql/sample_data_without_timetable.sql"})
     void add_ShouldAddNewTimetable() throws SQLException {
-        Timetable actual = timetableServ.add(7L, 7L, 7L, 7L, LocalDate.of(2023, 6, 8), 5L);
+        Timetable actual = timetableServ.add(7L, 7L, 7L, 7L, LocalDate.of(2023, 1, 1), 5L);
         assertEquals(actual.getTeacher().getId(), 7);
     }
     
@@ -38,7 +38,7 @@ class TimetableServiceImplTest {
     void add_ShouldTrewIllegalArgumentExceptionRoomDoesntExist() {
         
         Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
-            timetableServ.add(6L, 1L, 1L, 1L, LocalDate.of(2016, 9, 23), 1L);  
+            timetableServ.add(6L, 1L, 1L, 1L, null, 1L);  
         });
         assertNotNull(thrown.getMessage());
     }
@@ -47,7 +47,7 @@ class TimetableServiceImplTest {
     void add_ShouldTrewIllegalArgumentExceptionGroupDoesntExist() {
         
         Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
-            timetableServ.add(1L, 6L, 1L, 1L, LocalDate.of(2016, 9, 23), 1L);    
+            timetableServ.add(1L, 6L, 1L, 1L, null, 1L);    
         });
         assertNotNull(thrown.getMessage());
     }
@@ -56,7 +56,7 @@ class TimetableServiceImplTest {
     void add_ShouldTrewIllegalArgumentExceptionTeacherDoesntExist() {
         
         Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
-            timetableServ.add(1L, 1L, 1L, 1L, LocalDate.of(2016, 9, 23), 1L);    
+            timetableServ.add(1L, 1L, 1L, 1L, null, 1L);    
         });
         assertNotNull(thrown.getMessage());
     }
@@ -65,7 +65,7 @@ class TimetableServiceImplTest {
     void add_ShouldTrewIllegalArgumentExceptionCourseDoesntExist() {
         String messege = "Course with this id " + "1" + " doesn't exist!";
         Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
-            timetableServ.add(1L, 1L, 3L, 1L, LocalDate.of(2016, 9, 23), 1L);     
+            timetableServ.add(1L, 1L, 3L, 1L, null, 1L);     
         });
         assertEquals(messege, thrown.getMessage());
     }

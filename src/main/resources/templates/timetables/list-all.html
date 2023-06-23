@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}" />
+<body>
+	<div class="container">
+		<nav th:replace="~{fragments/general::navbar}" />
+	</div>
+	<div style="height: 100px;"></div>
+	<div class="grid text-center">
+		<p class="text-success" style="font-size: 45px;">Schedule</p>
+	</div>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<table class="table table-success table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Lesson Number</th>
+							<th>Date</th>
+							<th>Course</th>
+							<th>Teacher (first and last names)</th>
+							<th>Group</th>
+							<th>Room</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="timetable : ${timetables}">
+							<td th:text="${timetable.id}"></td>
+							<td th:text="${timetable.lessonNum}"></td>
+							<td th:text="${timetable.date}"></td>
+							<td th:text="${#strings.setJoin(timetable.course,',')}"></td>
+							<td th:text="${#strings.setJoin(timetable.teacher,',')}"></td>
+							<td th:text="${#strings.setJoin(timetable.group,',')}"></td>
+							<td th:text="${#strings.setJoin(timetable.room,',')}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -16,7 +16,7 @@ public class Timetable {
     @Column(name = "lesson_num")
     private Long lessonNum;
 
-    @Column(name = "date")
+    @Column(name = "date_ref")
     private LocalDate date;
 
     @ManyToOne

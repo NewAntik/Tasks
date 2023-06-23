@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}"/>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/general::navbar}"/>
+</div>
+    <div style="height: 100px;"></div>
+
+    <div class="grid text-center">
+        <p class="text-success" style="font-size: 45px;">Courses</p>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Group</th>
+                            <th>Teacher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${courses}">
+                            <td th:text="${course.id}"></td>
+                            <td th:text="${course.name}"></td>
+                            <td th:text="${course.description}"></td>
+                            <td th:text="${#strings.setJoin(course.groups,',')}"></td>
+                            <td th:text="${#strings.setJoin(course.teachers,',')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

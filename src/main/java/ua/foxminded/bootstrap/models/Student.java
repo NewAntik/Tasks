@@ -25,4 +25,8 @@ public class Student extends User {
     public Group getGroup() {
         return group;
     } 
+    
+    public void setGroup(Group group) {
+        this.group = group;
+    } 
 }
