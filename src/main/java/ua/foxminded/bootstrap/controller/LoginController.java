@@ -8,6 +8,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "login";
+        return "register/login";
     }
 }
