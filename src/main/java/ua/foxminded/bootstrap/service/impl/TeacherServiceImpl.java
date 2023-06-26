@@ -46,4 +46,9 @@ public class TeacherServiceImpl implements TeacherService{
     public List<Teacher> findAll() throws SQLException {
         return teacherRep.findAll();
     }
+
+    @Override
+    public Teacher findByName(String username) {
+        return teacherRep.findByFirstName(username);
+    }
 }

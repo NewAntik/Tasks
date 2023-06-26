@@ -23,4 +23,7 @@ public interface TeacherService {
     
     @Transactional(readOnly = true) 
     List<Teacher> findAll() throws SQLException;
+
+    @Transactional(readOnly = true)
+    Teacher findByName(String username);
 }

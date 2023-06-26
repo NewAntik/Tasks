@@ -50,4 +50,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> saveAll(List<Student> students) throws SQLException {
         return studentRep.saveAll(students);
     }
+
+    @Override
+    public Student findByname(String name) throws SQLException {
+        return studentRep.findByFirstName(name) ;
+    }
 }

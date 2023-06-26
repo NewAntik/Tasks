@@ -24,4 +24,7 @@ public interface StudentService {
     
     @Transactional(readOnly = true) 
     List<Student> findAll() throws SQLException;
+    
+    @Transactional(readOnly = true) 
+    Student findByname(String name) throws SQLException;
 }
