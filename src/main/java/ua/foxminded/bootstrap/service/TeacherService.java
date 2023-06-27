@@ -26,4 +26,8 @@ public interface TeacherService {
 
     @Transactional(readOnly = true)
     Teacher findByName(String username);
-}
+    
+    @Transactional
+    Teacher save(Teacher teacher) throws SQLException;
+    
+ }

@@ -2,7 +2,9 @@ package ua.foxminded.bootstrap.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ua.foxminded.bootstrap.dao.TeacherRepository;
@@ -12,15 +14,21 @@ import ua.foxminded.bootstrap.service.TeacherService;
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
+    private final PasswordEncoder passwordEnc;
     private final TeacherRepository teacherRep;
     
-    public TeacherServiceImpl(TeacherRepository teacherRepisitory) {
+    public TeacherServiceImpl(TeacherRepository teacherRepisitory, PasswordEncoder passwordEncoder) {
         this.teacherRep = teacherRepisitory;
+        this.passwordEnc = passwordEncoder;
     }
     
     @Override
     public List<Teacher> saveAll(List<Teacher> teachers) throws SQLException {
-        return teacherRep.saveAll(teachers);
+        List<Teacher> encodedTeachers = teachers.stream()
+                .map(teacher -> new Teacher(teacher.getLogin(), passwordEnc.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName()))
+                .collect(Collectors.toList());
+        
+        return teacherRep.saveAll(encodedTeachers);
     }
 
     @Override
@@ -50,5 +58,10 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public Teacher findByName(String username) {
         return teacherRep.findByFirstName(username);
+    }
+
+    @Override
+    public Teacher save(Teacher teacher) throws SQLException {
+        return new Teacher(teacher.getLogin(), passwordEnc.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName());
     }
 }

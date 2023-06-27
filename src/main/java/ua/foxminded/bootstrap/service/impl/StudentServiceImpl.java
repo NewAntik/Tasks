@@ -2,7 +2,9 @@ package ua.foxminded.bootstrap.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ua.foxminded.bootstrap.dao.GroupRepository;
@@ -13,10 +15,12 @@ import ua.foxminded.bootstrap.service.StudentService;
 @Service
 public class StudentServiceImpl implements StudentService {
     
+    private final PasswordEncoder passwordEnc;
     private final StudentRepository studentRep;
     private final GroupRepository groupRep;
 
-    public StudentServiceImpl(StudentRepository studentRepository, GroupRepository groupRepository) {
+    public StudentServiceImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, GroupRepository groupRepository) {
+        this.passwordEnc = passwordEncoder;
         this.studentRep = studentRepository;
         this.groupRep = groupRepository;
     }
@@ -48,7 +52,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> saveAll(List<Student> students) throws SQLException {
-        return studentRep.saveAll(students);
+        List<Student> encodedStudents = students.stream()
+                .map(student -> new Student(student.getLogin(), passwordEnc.encode(student.getPasswordHash()),
+                        student.getFirstName(), student.getLastName(), student.getGroup()))
+                .collect(Collectors.toList());
+        
+        return studentRep.saveAll(encodedStudents);
+    }
+    
+    @Override
+    public Student save(Student student) throws SQLException {
+        return studentRep.save(new Student(student.getLogin(), passwordEnc.encode(student.getPasswordHash()),
+                student.getFirstName(), student.getLastName(), student.getGroup()));
     }
 
     @Override
