@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfiguration {
     
     private static final String[] WHITE_LIST_URLS = {
-            "/register/**",
+            "/register/login",
             "/webjars/**",
             "/css/**",
             "/js/**",
@@ -22,7 +22,7 @@ public class WebSecurityConfiguration {
     
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(11);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -34,9 +34,9 @@ public class WebSecurityConfiguration {
                       .requestMatchers("/students/**").hasRole("STUDENT")
                       .requestMatchers("/teachers/**").hasRole("TEACHER"))
         .formLogin(formLogin ->
-             formLogin.usernameParameter("username")
-                      .passwordParameter("password")
-                      .loginPage ("/register/login"))
+             formLogin.passwordParameter("password")
+                      .loginPage ("/register/login")
+                      .defaultSuccessUrl("/students/list-all.html", true))
         .logout(logout ->
              logout.logoutUrl("/register/logout") 
                    .logoutSuccessUrl("/register/welcome"));
