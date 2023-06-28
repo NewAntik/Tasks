@@ -19,15 +19,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {StudentController.class})
+@WebMvcTest(controllers = { StudentController.class })
 class StudentControllerTest {
 
     @Autowired
     private MockMvc mvc;
-    
+
     @MockBean
     StudentService studentServ;
-    
+
     @Test
     void getStudentTable_shouldShowListOfStudents() throws Exception {
         when(studentServ.findAll()).thenReturn(Arrays.asList(
@@ -35,6 +35,7 @@ class StudentControllerTest {
                new Student("yammi", "54321", "Arnold", "Father", new Group())
         ));
         mvc.perform(get("/student"))
+                
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Father")))
                 .andExpect(content().string(containsString("Arnold")))

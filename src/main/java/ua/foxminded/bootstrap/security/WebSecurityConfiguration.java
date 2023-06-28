@@ -36,7 +36,7 @@ public class WebSecurityConfiguration {
         .formLogin(formLogin ->
              formLogin.passwordParameter("password")
                       .loginPage ("/register/login")
-                      .defaultSuccessUrl("/students/list-all.html", true))
+                      .defaultSuccessUrl("/welcome", true))
         .logout(logout ->
              logout.logoutUrl("/register/logout") 
                    .logoutSuccessUrl("/register/welcome"));

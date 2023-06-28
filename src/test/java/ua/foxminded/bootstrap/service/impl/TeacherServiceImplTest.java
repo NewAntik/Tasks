@@ -10,12 +10,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.jdbc.Sql;
 import ua.foxminded.bootstrap.dao.TeacherRepository;
+import ua.foxminded.bootstrap.security.WebSecurityConfiguration;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {TeacherRepository.class, TeacherServiceImpl.class}))
+@DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {WebSecurityConfiguration.class, TeacherRepository.class, TeacherServiceImpl.class}))
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql(scripts = {"/sql/clear_tables.sql", "/sql/sample_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class TeacherServiceImplTest {
-
+    
     @Autowired
     TeacherServiceImpl teacherServ;
     
