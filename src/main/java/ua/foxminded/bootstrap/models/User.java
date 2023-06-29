@@ -41,6 +41,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User(String login, String passwordHash, Role role, String firstName, String lastName) {
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Long getId() {
         return id;
     }

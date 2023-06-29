@@ -1,29 +1,33 @@
 package ua.foxminded.bootstrap.models;
 
-import java.util.*;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 public class MyUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-    
+
     private final User user;
+    private final Collection<GrantedAuthority> roles;
 
     public MyUserDetails(User user) {
         this.user = user;
+        this.roles = Optional.ofNullable(user)
+                .map(it -> Stream.of(it)
+                        .map(User::getRole)
+                        .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_%s".formatted(role)))
+                        .toList())
+                .orElse(Collections.emptyList());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> roles = new ArrayList<>();
-
-        if (user != null) {
-            roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
-        }
-
         return roles;
     }
 
@@ -47,38 +51,22 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return user != null;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return user != null;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return user != null;
     }
 
     @Override
     public boolean isEnabled() {
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return user != null;
     }
 
     public User getUser() {

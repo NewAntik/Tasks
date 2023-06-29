@@ -1,40 +1,42 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/general::head}" />
+<head th:replace="~{fragments/general::head}"/>
 <style type="text/css">
-.form-signin {
-	width: 100%;
-	max-width: 330px;
-	padding: 15px;
-	margin: 0 auto;
-}
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+    }
 
-.form-signin .form-control {
-	position: relative;
-	box-sizing: border-box;
-	height: auto;
-	padding: 15px;
-	font-size: 20px;
-}
+    .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 15px;
+        font-size: 20px;
+    }
 
-.form-signin input[type="password"] {
-	margin-bottom: 10px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
 </style>
 <body class="text-center">
-	<div style="height: 100px;"></div>
-	<form class="form-signin" method="post">
-		<img class="mb-4" src="/images/cambridge_logo.png" alt="" width="200"
-			height="230">
-		<h1 class="h3 mb-3 font-weight-normal">University</h1>
-		<input type="text" id="inputLogin" class="form-control"
-			placeholder="Login" required autofocus> <input
-			type="password" id="inputPassword" class="form-control"
-			placeholder="Password" name="password" required>
+<div style="height: 100px;"></div>
+<form class="form-signin" method="post">
+    <img class="mb-4" src="/images/cambridge_logo.png" alt="" width="200"
+         height="230">
+    <h1 class="h3 mb-3 font-weight-normal">University</h1>
+    <input name="username"
+           type="text" id="inputLogin" class="form-control"
+           placeholder="Login" required autofocus>
+    <input
+            type="password" id="inputPassword" class="form-control"
+            placeholder="Password" name="password" required>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-	</form>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+</form>
 </body>
 </html>

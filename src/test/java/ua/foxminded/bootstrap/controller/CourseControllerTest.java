@@ -1,24 +1,25 @@
 package ua.foxminded.bootstrap.controller;
 
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
 import ua.foxminded.bootstrap.models.Course;
+import ua.foxminded.bootstrap.security.WebSecurityConfiguration;
 import ua.foxminded.bootstrap.service.CourseService;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Arrays;
 
-@WebMvcTest(controllers = { CourseController.class })
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(controllers = {CourseController.class})
+@Import(WebSecurityConfiguration.class)
 class CourseControllerTest {
 
     @Autowired
@@ -28,11 +29,26 @@ class CourseControllerTest {
     private CourseService courseServ;
 
     @Test
+    void shouldRedirectToLoginPage() throws Exception {
+        mvc.perform(get("/course"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "http://localhost/register/login"));
+    }
+
+    @Test
+    @WithMockUser(roles = "STUDENT")
+    void shouldDenyAccessWithWrongRole() throws Exception {
+        mvc.perform(get("/course"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
     void getCourseTable_shouldShowListOfCourses() throws Exception {
         when(courseServ.findAll()).thenReturn(Arrays.asList(
-               new Course(100L, "Math", "Math Description"),
-               new Course(103L, "Music", "Music Description"),
-               new Course(105L, "Physics", "Physics Description")
+                new Course(100L, "Math", "Math Description"),
+                new Course(103L, "Music", "Music Description"),
+                new Course(105L, "Physics", "Physics Description")
         ));
         mvc.perform(get("/course"))
                 .andExpect(status().isOk())
