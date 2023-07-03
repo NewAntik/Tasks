@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}" />
+<style type="text/css">
+body {
+	background-image: url("images/creation.jpg");
+}
+
+.user-form {
+	width: 100%;
+	max-width: 200px;
+	padding: 5px;
+	margin: 0 auto;
+}
+
+.user-form .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 7px;
+	font-size: 15px;
+}
+
+.user-form input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+</style>
+<body class="text-center">
+	<form class="user-form" method="post" action="/save-user">
+		<div class="mb-3">
+			<label for="firstName" class="form-label">First Name:</label> <input
+				type="text" class="form-control" id="firstName" name="firstName"
+				required>
+		</div>
+
+		<div class="mb-3">
+			<label for="lastName" class="form-label">Last Name:</label> <input
+				type="text" class="form-control" id="lastName" name="lastName"
+				required>
+		</div>
+
+		<div class="mb-3">
+			<label for="login" class="form-label">Login:</label> <input
+				type="text" class="form-control" id="login" name="login" required>
+		</div>
+
+		<div class="mb-3">
+			<label for="password" class="form-label">Password:</label> <input
+				type="password" class="form-control" id="password" name="password"
+				required>
+		</div>
+
+		<div class="mb-3">
+			<label for="role" class="form-label">Role:</label> <select
+				class="form-select" id="role" name="role" required>
+				<option value="Student">Student</option>
+				<option value="Teacher">Teacher</option>
+				<option value="Stuff">Stuff</option>
+			</select>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Create User</button>
+		<div th:if="${successMessage}" class="alert alert-success"
+			role="alert">
+			<p th:text="${successMessage}"></p>
+		</div>
+		<div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+			<p th:text="${errorMessage}"></p>
+		</div>
+	</form>
+
+</body>
+</html>
