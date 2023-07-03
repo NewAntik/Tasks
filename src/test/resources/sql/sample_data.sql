@@ -25,7 +25,7 @@ VALUES (1, 'AA-01'),
        (7, 'AA-05');
        
 INSERT INTO users (id, login, password, role_type, role, group_ref, first_name, last_name)
-VALUES (1, 'staff', '1234', 'user', 'STAFF', null, 'Cleaning', 'Lady'),
+VALUES (1, 'admin', '1234', 'admin', 'ADMIN', null, 'Admin', 'Admin'),
        (2, 'student1', '1234', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
        (3, 'teacher1', '1234', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
        (4, 'student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
