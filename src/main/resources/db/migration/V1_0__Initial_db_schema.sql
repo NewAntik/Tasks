@@ -16,8 +16,8 @@ CREATE TABLE groups
 CREATE TABLE users
 (
     id         BIGINT      NOT NULL DEFAULT nextval('users_id_seq'),
-    login      VARCHAR(10),
-    password   VARCHAR(4),
+    login      VARCHAR(10) UNIQUE,
+    password   VARCHAR(60),
     role_type  TEXT        NOT NULL,
     role       TEXT        NOT NULL,
     group_ref  BIGINT references groups (id),

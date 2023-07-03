@@ -24,13 +24,13 @@ VALUES (1, 'AA-01'),
        (5, 'AA-05'),
        (7, 'AA-05');
        
-INSERT INTO users (id, login, password, role_type, role, group_ref, first_name, last_name)
-VALUES (1, 'staff', '1234', 'user', 'STAFF', null, 'Cleaning', 'Lady'),
-       (2, 'student1', '1234', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
-       (3, 'teacher1', '1234', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
-       (4, 'student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
-       (5, 'teacher3', '1234', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
-       (7, 'teacher7', '1237', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
+INSERT INTO users ( login, password, role_type, role, group_ref, first_name, last_name)
+VALUES ('admin', '1234', 'admin', 'ADMIN', null, 'Main', 'Main'),
+       ('student1', '1234', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
+       ('teacher1', '1234', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
+       ('student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
+       ('teacher3', '1234', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
+       ('teacher7', '1237', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
        
 INSERT INTO timetables (id, room_ref, course_ref, group_ref, teacher_ref, date_ref, lesson_num)
 VALUES (1, 1, 100, 1, 1, '2023-06-22 19:10:25-07', 5),
