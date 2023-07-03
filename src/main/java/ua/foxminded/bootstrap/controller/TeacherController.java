@@ -19,11 +19,16 @@ public class TeacherController {
         this.teacherServ = teacherServ;
     }
 
-    @GetMapping("/teacher")
+    @GetMapping("/teachers")
     public String getTeacherTable(Model model) throws SQLException {
         List<Teacher> teachers = teacherServ.findAll();
         model.addAttribute("teachers", teachers);
         
         return "teachers/list-all";
+    }
+    
+    @GetMapping("/welcome-teacher")
+    public String getStudentWelcome(Model model) throws SQLException {
+        return "teachers/welcome";
     }
 }

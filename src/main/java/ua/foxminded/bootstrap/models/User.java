@@ -5,7 +5,7 @@ import ua.foxminded.bootstrap.models.utils.Role;
 
 import java.util.Objects;
 
-@Entity(name = "users")
+@Entity(name = "Users")
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role_type")

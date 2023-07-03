@@ -19,11 +19,16 @@ public class StudentController {
         this.studentServ = studentService;
     }
     
-    @GetMapping("/student")
+    @GetMapping("/students")
     public String getStudentTable(Model model) throws SQLException {
         List<Student> students = studentServ.findAll();
         model.addAttribute("students", students);
         
         return "students/list-all";
+    }
+    
+    @GetMapping("/welcome-student")
+    public String getStudentWelcome(Model model){
+        return "students/welcome";
     }
 }
