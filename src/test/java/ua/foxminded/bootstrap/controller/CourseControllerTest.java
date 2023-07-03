@@ -30,15 +30,15 @@ class CourseControllerTest {
 
     @Test
     void shouldRedirectToLoginPage() throws Exception {
-        mvc.perform(get("/course"))
+        mvc.perform(get("/courses"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "http://localhost/register/login"));
     }
 
     @Test
-    @WithMockUser(roles = "STUDENT")
+    @WithMockUser(roles = "TEACHER")
     void shouldDenyAccessWithWrongRole() throws Exception {
-        mvc.perform(get("/course"))
+        mvc.perform(get("/courses"))
                 .andExpect(status().isForbidden());
     }
 
@@ -50,7 +50,7 @@ class CourseControllerTest {
                 new Course(103L, "Music", "Music Description"),
                 new Course(105L, "Physics", "Physics Description")
         ));
-        mvc.perform(get("/course"))
+        mvc.perform(get("/courses"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Physics")))
                 .andExpect(content().string(containsString("Physics Description")))
