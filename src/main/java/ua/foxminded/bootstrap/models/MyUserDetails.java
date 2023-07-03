@@ -3,6 +3,7 @@ package ua.foxminded.bootstrap.models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,8 +16,10 @@ public class MyUserDetails implements UserDetails {
 
     private final User user;
     private final Collection<GrantedAuthority> roles;
+    private final PasswordEncoder passwordEncoder;
 
-    public MyUserDetails(User user) {
+
+    public MyUserDetails(User user, PasswordEncoder passwordEncoder) {
         this.user = user;
         this.roles = Optional.ofNullable(user)
                 .map(it -> Stream.of(it)
@@ -24,6 +27,7 @@ public class MyUserDetails implements UserDetails {
                         .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_%s".formatted(role)))
                         .toList())
                 .orElse(Collections.emptyList());
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,20 +37,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        if (user == null) {
-            return null;
-        } else {
-            return user.getPasswordHash();
-        }
+        return this.user == null ? null : passwordEncoder.encode(user.getPasswordHash());
     }
 
     @Override
     public String getUsername() {
-        if (user == null) {
-            return null;
-        } else {
-            return user.getFirstName();
-        }
+        return this.user == null ? null : user.getFirstName();
     }
 
     @Override
