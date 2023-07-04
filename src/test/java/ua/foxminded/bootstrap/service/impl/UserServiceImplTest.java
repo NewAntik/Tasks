@@ -2,35 +2,44 @@ package ua.foxminded.bootstrap.service.impl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 import ua.foxminded.bootstrap.dao.UserRepository;
+import ua.foxminded.bootstrap.models.User;
+import ua.foxminded.bootstrap.models.utils.Role;
 import ua.foxminded.bootstrap.security.SecuritySharedConfiguration;
 import ua.foxminded.bootstrap.service.UserService;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecuritySharedConfiguration.class, UserRepository.class, UserService.class}))
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Sql(scripts = {"/sql/clear_tables.sql", "/sql/sample_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@SpringBootTest(classes = {UserServiceImpl.class, SecuritySharedConfiguration.class})
 class UserServiceImplTest {
 
+    @MockBean
+    UserRepository userRepository;
+    
     @Autowired
     UserService userServ;
 
     @Test
-    @Sql(scripts = {"/sql/clear_tables.sql"})
     void addUser_ShouldAddNewUser() {
-        userServ.addUser("admin", "1234", "Admin", "admin", "admin");
-        assertEquals("admin", userServ.findById(1L).get().getLogin());
+        User user = new User("admin", "1234", Role.ADMIN, "Admin", "admin");
+        when(userRepository.save(user)).thenReturn(user);
+        
+        Optional<User> userAfterSave = userServ.addUser("admin", "1234", "Admin", "admin", "admin");
+        
+        verify(userRepository).save(user);
+        assertEquals(Role.ADMIN, userAfterSave.get().getRole());
     }
 
     @Test
     void addUser_ShouldThrewIllegalArgumentException() {
+        when(userRepository.findByLogin("admin")).thenReturn(Optional.of(new User("admin", "1234", Role.ADMIN, "Admin", "admin")));
+        
         Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
             userServ.addUser("admin", "1234", "Admin", "admin", "admin");
         });

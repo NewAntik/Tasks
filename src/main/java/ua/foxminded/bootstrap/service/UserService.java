@@ -9,5 +9,5 @@ import ua.foxminded.bootstrap.models.User;
 public interface UserService extends UserDetailsService {
 
     Optional<User> findById(Long id);
-    void addUser(String login, String password, String roleName, String firstName, String lastName);
+    Optional<User> addUser(String login, String password, String roleName, String firstName, String lastName);
 }

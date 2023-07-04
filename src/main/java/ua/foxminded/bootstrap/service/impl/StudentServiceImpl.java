@@ -12,29 +12,29 @@ import ua.foxminded.bootstrap.service.StudentService;
 @Service
 public class StudentServiceImpl implements StudentService {
     
-    private final StudentRepository studentRep;
+    private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
-        this.studentRep = studentRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public List<Student> findStudentsRelatedCourseByName(String courseName) throws SQLException {
-        return studentRep.findByCourseName(courseName);
+        return studentRepository.findByCourseName(courseName);
     }
     
     @Override
     public void delete(Long id) throws SQLException {
-        studentRep.deleteById(id);
+        studentRepository.deleteById(id);
     }
 
     @Override
     public List<Student> findAll() throws SQLException {
-        return studentRep.findAll();
+        return studentRepository.findAll();
     }
 
     @Override
     public Student findByName(String name) throws SQLException {
-        return studentRep.findByFirstName(name) ;
+        return studentRepository.findByFirstName(name) ;
     }
 }

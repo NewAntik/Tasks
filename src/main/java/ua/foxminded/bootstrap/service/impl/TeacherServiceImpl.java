@@ -14,54 +14,55 @@ import ua.foxminded.bootstrap.service.TeacherService;
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
-    private final PasswordEncoder passwordEnc;
-    private final TeacherRepository teacherRep;
+    private final PasswordEncoder passwordEncoder;
+    private final TeacherRepository teacherRepository;
     
     public TeacherServiceImpl(TeacherRepository teacherRepisitory, PasswordEncoder passwordEncoder) {
-        this.teacherRep = teacherRepisitory;
-        this.passwordEnc = passwordEncoder;
+        this.teacherRepository = teacherRepisitory;
+        this.passwordEncoder = passwordEncoder;
     }
     
     @Override
     public List<Teacher> saveAll(List<Teacher> teachers) throws SQLException {
         List<Teacher> encodedTeachers = teachers.stream()
-                .map(teacher -> new Teacher(teacher.getLogin(), passwordEnc.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName()))
+                .map(teacher -> new Teacher(teacher.getLogin(), passwordEncoder.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName()))
                 .collect(Collectors.toList());
         
-        return teacherRep.saveAll(encodedTeachers);
+        return teacherRepository.saveAll(encodedTeachers);
     }
 
     @Override
     public List<Teacher> findTeachersBySpecialization(String specialization) throws SQLException {
-        if(teacherRep.findBySpecialization(specialization).isEmpty()) {
+        List<Teacher> teachers = teacherRepository.findBySpecialization(specialization);
+        if(teachers.isEmpty()) {
             throw new IllegalArgumentException("Teachers with this specialization" + specialization + "don't exist!");
         } else {
-            return teacherRep.findBySpecialization(specialization);
+            return teachers;
         }
     }
 
     @Override
     public Teacher add(String login, String passwordHash, String firstName, String lastName) throws SQLException {
-        return teacherRep.save(new Teacher(login, passwordHash, firstName, lastName));
+        return teacherRepository.save(new Teacher(login, passwordHash, firstName, lastName));
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-        teacherRep.deleteById(id);
+        teacherRepository.deleteById(id);
     }
 
     @Override
     public List<Teacher> findAll() throws SQLException {
-        return teacherRep.findAll();
+        return teacherRepository.findAll();
     }
 
     @Override
     public Teacher findByName(String username) {
-        return teacherRep.findByFirstName(username);
+        return teacherRepository.findByFirstName(username);
     }
 
     @Override
     public Teacher save(Teacher teacher) throws SQLException {
-        return new Teacher(teacher.getLogin(), passwordEnc.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName());
+        return new Teacher(teacher.getLogin(), passwordEncoder.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName());
     }
 }

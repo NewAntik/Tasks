@@ -12,5 +12,4 @@ public class SecuritySharedConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
