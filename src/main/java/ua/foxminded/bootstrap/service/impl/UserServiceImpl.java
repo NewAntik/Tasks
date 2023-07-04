@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
         
         return Role.STAFF;
     }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 }

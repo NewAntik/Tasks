@@ -18,7 +18,7 @@ public class TimetableController {
         this.timetableServ = timetableServ;
     }
 
-    @GetMapping("/timetable")
+    @GetMapping("/timetables")
     public String getTimetableTable(Model model) throws SQLException {
         List<Timetable> timetables = timetableServ.findAll();
         model.addAttribute("timetables", timetables);

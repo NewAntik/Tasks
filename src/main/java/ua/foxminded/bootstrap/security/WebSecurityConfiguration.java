@@ -30,7 +30,7 @@ public class WebSecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers("/admin/**", "/welcome-admin", "/courses").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/welcome-admin", "/courses", "/timetables", "/rooms").hasRole("ADMIN")
                         .requestMatchers("/students/**", "/welcome-student", "/students").hasRole("STUDENT")
                         .requestMatchers("/teachers/**", "/welcome-teacher", "/teachers").hasRole("TEACHER")
                         .anyRequest().authenticated())
