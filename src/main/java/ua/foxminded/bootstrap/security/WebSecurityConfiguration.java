@@ -3,6 +3,7 @@ package ua.foxminded.bootstrap.security;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,9 +12,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ua.foxminded.bootstrap.service.UserService;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class WebSecurityConfiguration {
     private static final Logger LOGGER = Logger.getLogger(WebSecurityConfiguration.class.getName());
     private static final String LOGIN = "/register/login";
@@ -25,9 +27,13 @@ public class WebSecurityConfiguration {
             "/images/**"
     };
 
+    @Autowired
+    UserService userService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+                .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
                         .requestMatchers("/admin/**", "/welcome-admin", "/courses", "/timetables", "/rooms").hasRole("ADMIN")

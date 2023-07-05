@@ -3,4 +3,7 @@ spring:
     username: sa
     password:
     url: jdbc:tc:postgresql:15:///test?TC_DAEMON=true
-  
+
+logging:
+  level:
+    org.springframework.security: debug

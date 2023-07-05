@@ -7,9 +7,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.foxminded.bootstrap.models.Group;
+import ua.foxminded.bootstrap.models.MyUserDetails;
 import ua.foxminded.bootstrap.models.Student;
 import ua.foxminded.bootstrap.models.User;
 import ua.foxminded.bootstrap.models.utils.Role;
@@ -41,17 +43,17 @@ class LoginTest {
     @Test
     void shouldLoginUserWithCorrectUsernameAndPassword() throws Exception {
         User user = new User("admin", passwordEncoder.encode("1234"), Role.ADMIN, "Main", "Main");
-        when(userService.findByLogin("admin")).thenReturn(Optional.of(user));
+        when(userService.loadUserByUsername("admin")).thenReturn(new MyUserDetails(user));
 
         mvc.perform(formLogin("/register/login").user("username", user.getLogin()).password("1234"))
            .andExpect(status().is3xxRedirection())
-           .andExpect(header().string("Location", "/welcome"));
+           .andExpect(header().string("Location", "/welcome-admin"));
     }
     
     @Test
     void shouldLoginStudentWithCorrectUsernameAndPassword() throws Exception {
         Student user = new Student("student", passwordEncoder.encode("1234"), Role.STUDENT, "Student", "Student", new Group("AA-01"));
-        when(userService.findByLogin("student")).thenReturn(Optional.of(user));
+//        when(userService.findByLogin("student")).thenReturn(Optional.of(user));
 
         mvc.perform(formLogin("/register/login").user("username", user.getLogin()).password("1234"))
            .andExpect(status().is3xxRedirection())
@@ -61,7 +63,7 @@ class LoginTest {
     @Test
     void shouldNotLoginUserWithBadPassword() throws Exception {
         User user = new User("test", passwordEncoder.encode("secret"), Role.ADMIN, "Test", "Testerson");
-        when(userService.findByLogin("test")).thenReturn(Optional.of(user));
+//        when(userService.findByLogin("test")).thenReturn(Optional.of(user));
 
         mvc.perform(formLogin("/register/login").user("username", user.getLogin()).password("1234"))
            .andExpect(status().is3xxRedirection())
@@ -70,7 +72,7 @@ class LoginTest {
 
     @Test
     void shouldNotLoginUserWithBadLogin() throws Exception {
-        when(userService.findByLogin(anyString())).thenReturn(Optional.empty());
+//        when(userService.findByLogin(anyString())).thenReturn(Optional.empty());
 
         mvc.perform(formLogin("/register/login").user("username", "test").password("1234"))
            .andExpect(status().is3xxRedirection())

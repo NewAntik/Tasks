@@ -16,8 +16,10 @@ public class MyUserDetails implements UserDetails {
 
     private final User user;
     private final Collection<GrantedAuthority> roles;
-    private final PasswordEncoder passwordEncoder;
 
+    public MyUserDetails(User user) {
+        this(user, null);
+    }
 
     public MyUserDetails(User user, PasswordEncoder passwordEncoder) {
         this.user = user;
@@ -27,7 +29,6 @@ public class MyUserDetails implements UserDetails {
                         .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_%s".formatted(role)))
                         .toList())
                 .orElse(Collections.emptyList());
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.user == null ? null : passwordEncoder.encode(user.getPasswordHash());
+        return this.user == null ? null : user.getPasswordHash();
     }
 
     @Override
