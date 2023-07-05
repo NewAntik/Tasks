@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByLogin(username)
-                .map(user -> new MyUserDetails(user, passwordEncoder))
+                .map(user -> new MyUserDetails(user))
                 .orElseThrow(() -> new UsernameNotFoundException("User %s not found".formatted(username)));
     }
     

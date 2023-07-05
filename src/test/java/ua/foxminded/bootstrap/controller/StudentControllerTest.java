@@ -17,21 +17,25 @@ import ua.foxminded.bootstrap.security.WebSecurityConfiguration;
 import ua.foxminded.bootstrap.models.Group;
 import ua.foxminded.bootstrap.models.Student;
 import ua.foxminded.bootstrap.service.StudentService;
+import ua.foxminded.bootstrap.service.UserService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = { StudentController.class })
+@WebMvcTest(controllers = {StudentController.class})
 @Import(WebSecurityConfiguration.class)
 class StudentControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    MockMvc mvc;
 
     @MockBean
     StudentService studentServ;
+    
+    @MockBean
+    UserService userService;
 
     @Test
     @WithMockUser(roles = "STUDENT")

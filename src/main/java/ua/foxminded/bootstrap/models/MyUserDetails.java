@@ -3,7 +3,6 @@ package ua.foxminded.bootstrap.models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,10 +17,6 @@ public class MyUserDetails implements UserDetails {
     private final Collection<GrantedAuthority> roles;
 
     public MyUserDetails(User user) {
-        this(user, null);
-    }
-
-    public MyUserDetails(User user, PasswordEncoder passwordEncoder) {
         this.user = user;
         this.roles = Optional.ofNullable(user)
                 .map(it -> Stream.of(it)

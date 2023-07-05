@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.security.WebSecurityConfiguration;
 import ua.foxminded.bootstrap.service.CourseService;
+import ua.foxminded.bootstrap.service.UserService;
 
 import java.util.Arrays;
 
@@ -22,6 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(WebSecurityConfiguration.class)
 class CourseControllerTest {
 
+    @MockBean
+    UserService userService;
+    
     @Autowired
     private MockMvc mvc;
 

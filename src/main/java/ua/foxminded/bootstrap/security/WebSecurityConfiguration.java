@@ -26,7 +26,14 @@ public class WebSecurityConfiguration {
             "/js/**",
             "/images/**"
     };
-
+    private static final String[] ADMIN_LIST_URLS = {
+            "/admin/**",
+            "/welcome-admin",
+            "/courses",
+            "/timetables",
+            "/rooms"
+    };
+    
     @Autowired
     UserService userService;
 
@@ -36,7 +43,7 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers("/admin/**", "/welcome-admin", "/courses", "/timetables", "/rooms").hasRole("ADMIN")
+                        .requestMatchers(ADMIN_LIST_URLS).hasRole("ADMIN")
                         .requestMatchers("/students/**", "/welcome-student", "/students").hasRole("STUDENT")
                         .requestMatchers("/teachers/**", "/welcome-teacher", "/teachers").hasRole("TEACHER")
                         .anyRequest().authenticated())
