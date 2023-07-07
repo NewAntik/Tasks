@@ -2,6 +2,7 @@ package ua.foxminded.bootstrap.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,5 +21,8 @@ public interface StudentService {
     List<Student> findAll() throws SQLException;
     
     @Transactional(readOnly = true) 
-    Student findByName(String name) throws SQLException;
+    Optional<Student> findByName(String name) throws SQLException;
+
+    @Transactional
+    Optional<Student> addNewStudent(String login, String password, String firstName, String lastName, Long groupId);
 }
