@@ -48,7 +48,7 @@ class LoginTest {
     
     @Test
     void shouldLoginStudentWithCorrectUsernameAndPassword() throws Exception {
-        Student user = new Student("student", passwordEncoder.encode("1234"), Role.STUDENT, "Student", "Student", new Group("AA-01"));
+        Student user = new Student("student", passwordEncoder.encode("1234"), "Student", "Student", new Group("AA-01"));
         when(userService.loadUserByUsername("student")).thenReturn(new MyUserDetails(user));
 
         mvc.perform(formLogin("/register/login").user("username", user.getLogin()).password("1234"))
