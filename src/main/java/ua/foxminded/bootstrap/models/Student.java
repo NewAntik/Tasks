@@ -21,11 +21,7 @@ public class Student extends User {
     public Student(String login, String passwordHash, String firstName, String lastName, Group group) {
         super(login, passwordHash, firstName, lastName);
         this.group = group;
-    }
-
-    public Student(String login, String passwordHash, Role role, String firstName, String lastName, Group group) {
-        super(login, passwordHash, role, firstName, lastName);
-        this.group = group;
+        this.role = Role.STUDENT;
     }
 
     public Group getGroup() {

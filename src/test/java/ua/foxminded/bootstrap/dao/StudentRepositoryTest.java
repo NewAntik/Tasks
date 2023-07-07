@@ -20,11 +20,17 @@ import ua.foxminded.bootstrap.models.Student;
 class StudentRepositoryTest {
 
     @Autowired
-    StudentRepository studentRep;
+    StudentRepository studentRepository;
+    
+    @Test
+    void findByLogin_ShouldReturnStudentWithSpecifiedLogin() {
+        Student fromDb = studentRepository.findByLogin("student1").get();
+        assertEquals("student1", fromDb.getLogin());
+    }
     
     @Test
     void findByCourseName_ShouldReturnListOfStudenstReletedWithCourseByCourseName() {
-        List<Student> students = studentRep.findByCourseName("Math");
+        List<Student> students = studentRepository.findByCourseName("Math");
         assertEquals(2, students.size());
         assertEquals(2L, students.get(0).getId());
         assertEquals(4L, students.get(1).getId());
@@ -32,7 +38,7 @@ class StudentRepositoryTest {
     
     @Test
     void findByCourseId_ShouldReturnListOfStudenstReletedWithCourseByCourseId() {
-        List<Student> students = studentRep.findByCourseId(101L);
+        List<Student> students = studentRepository.findByCourseId(101L);
         assertEquals(2, students.size());
         assertEquals(2L, students.get(0).getId());
         assertEquals(4L, students.get(1).getId());
@@ -40,7 +46,7 @@ class StudentRepositoryTest {
     
     @Test
     void findByFirstName_ShouldReturnStudentByStudentFirstName() {
-        Student student = studentRep.findByFirstName("Jon");
+        Student student = studentRepository.findByFirstName("Jon").get();
         assertEquals("Jon", student.getFirstName());
         assertEquals(2L, student.getId());
     }
