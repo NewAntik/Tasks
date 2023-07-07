@@ -8,12 +8,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import ua.foxminded.bootstrap.security.WebSecurityConfiguration;
+import ua.foxminded.bootstrap.service.StudentService;
+import ua.foxminded.bootstrap.service.TeacherService;
 import ua.foxminded.bootstrap.service.UserService;
 
 @WebMvcTest(controllers = {AdminController.class})
@@ -26,12 +28,20 @@ class AdminControllerTest {
     @MockBean
     UserService userService;
     
+    @MockBean
+    StudentService studentService;
+    
+    @MockBean
+    TeacherService teacherService;
+    
     @Test
     void getAdminWelcome_ShouldRedirectToAdminWelcomePage() throws Exception {
         mvc.perform(get("/welcome-admin"))
         .andExpect(status().is3xxRedirection())
         .andExpect(header().string("Location", "http://localhost/register/login"));
     }
+    
+    
     
     @Test
     @WithMockUser(roles = "TEACHER")
@@ -44,11 +54,11 @@ class AdminControllerTest {
     @WithMockUser(roles = "ADMIN")
     void saveUser_shouldSaveNewUser() throws Exception {
         mvc.perform(post("/save-user")
-                .param( "firstName", "John")
-                .param("lastName", "Doe")
+                .param( "firstName", "Henry")
+                .param("lastName", "Martin")
                 .param("login", "login")
                 .param("password", "1234")
-                .param("role", "Student"))
+                .param("role", "Staff"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("successMessage"));
     }
@@ -60,10 +70,10 @@ class AdminControllerTest {
         String lastName = "Doe";
         String login = "login";
         String password = "1234";
-        String role = "Student";
-
-        doThrow(IllegalArgumentException.class).when(userService).addUser(firstName, lastName, login, password, role);
-
+        String role = "Staff";
+        
+        when(userService.addUser(login, password, firstName, lastName)).thenThrow(IllegalArgumentException.class);
+        
         mvc.perform(post("/save-user")
                 .param("firstName", firstName)
                 .param("lastName", lastName)
@@ -72,6 +82,6 @@ class AdminControllerTest {
                 .param("role", role))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("errorMessage"))
-                .andExpect(model().attribute("errorMessage", "User with this login already exists"));
+                .andExpect(model().attribute("errorMessage", "Staff with this login already exists"));
     }
 }
