@@ -2,6 +2,7 @@ package ua.foxminded.bootstrap.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,8 +43,12 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public Teacher add(String login, String passwordHash, String firstName, String lastName) throws SQLException {
-        return teacherRepository.save(new Teacher(login, passwordHash, firstName, lastName));
+    public Optional<Teacher> addNewTeacher(String login, String passwordHash, String firstName, String lastName) throws SQLException {
+        if(teacherRepository.findByLogin(login).isPresent()) {
+            throw new IllegalArgumentException("Teacher with this login already exist!");
+        } else {
+            return Optional.of(teacherRepository.save(new Teacher(login, passwordEncoder.encode(passwordHash), firstName, lastName)));
+        }
     }
 
     @Override
@@ -57,12 +62,7 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public Teacher findByName(String username) {
+    public Optional<Teacher> findByName(String username) {
         return teacherRepository.findByFirstName(username);
-    }
-
-    @Override
-    public Teacher save(Teacher teacher) throws SQLException {
-        return new Teacher(teacher.getLogin(), passwordEncoder.encode(teacher.getPasswordHash()), teacher.getFirstName(), teacher.getLastName());
     }
 }

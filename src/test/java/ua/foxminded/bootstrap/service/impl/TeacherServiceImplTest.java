@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ua.foxminded.bootstrap.dao.TeacherRepository;
 import ua.foxminded.bootstrap.models.Teacher;
+import ua.foxminded.bootstrap.models.utils.Role;
 import ua.foxminded.bootstrap.security.SecuritySharedConfiguration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
@@ -47,6 +50,27 @@ class TeacherServiceImplTest {
 
         Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
             teacherService.findTeachersBySpecialization("Philosophy");
+        });
+        assertNotNull(thrown.getMessage());
+    }
+    
+    @Test
+    void addTeacher_ShouldAddNewUserWithTeacherRole() throws SQLException {
+        Teacher user = new Teacher("teacher1", "1234", "Teacher", "Teacher");
+        when(teacherRepository.save(user)).thenReturn(user);
+        
+        Optional<Teacher> userAfterSave = teacherService.addNewTeacher("teacher1", "1234", "Teacher", "Teacher");
+        
+        verify(teacherRepository).save(user);
+        assertEquals(Role.TEACHER, userAfterSave.get().getRole());
+    }
+    
+    @Test
+    void addTeacher_ShouldThrewIllegalArgumentExceptionTeacherAlreadyExist() {
+        when(teacherRepository.findByLogin("teacher1")).thenReturn(Optional.of(new Teacher("teacher1", "1234", "Teacher", "Teacher")));
+        
+        Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+            teacherService.addNewTeacher("teacher1", "1234", "Teacher", "Teacher");
         });
         assertNotNull(thrown.getMessage());
     }
