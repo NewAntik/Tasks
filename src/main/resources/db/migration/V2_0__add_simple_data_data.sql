@@ -25,12 +25,12 @@ VALUES (1, 'AA-01'),
        (7, 'AA-05');
        
 INSERT INTO users ( login, password, role_type, role, group_ref, first_name, last_name)
-VALUES ('admin', '1234', 'admin', 'ADMIN', null, 'Main', 'Main'),
-       ('student1', '1234', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
-       ('teacher1', '1234', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
-       ('student2', '1234', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
-       ('teacher3', '1234', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
-       ('teacher7', '1237', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
+VALUES ('admin', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'admin', 'ADMIN', null, 'Main', 'Main'),
+       ('student1', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
+       ('teacher1', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
+       ('student2', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
+       ('teacher3', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
+       ('teacher7', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
        
 INSERT INTO timetables (id, room_ref, course_ref, group_ref, teacher_ref, date_ref, lesson_num)
 VALUES (1, 1, 100, 1, 1, '2023-06-22 19:10:25-07', 5),
