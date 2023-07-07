@@ -37,25 +37,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> addUser(String login, String password, String roleName, String firstName, String lastName) {         
+    public Optional<User> addUser(String login, String password, String firstName, String lastName) {         
         if(userRepository.findByLogin(login).isPresent()) {
             throw new IllegalArgumentException("User with this login already exist!");
         } else {
-            User newUser = new User(login, passwordEncoder.encode(password), getRole(roleName), firstName, lastName);
-            return Optional.of(userRepository.save(newUser));
+            return Optional.of(userRepository.save(new User(login, passwordEncoder.encode(password), Role.STAFF, firstName, lastName)));
         }
     }
     
-    private Role getRole (String role) {         
-        if (role.equals(Role.TEACHER.getRole()) ) {
-            return Role.TEACHER;
-        }
-        if (role.equals(Role.STUDENT.getRole())) {
-            return Role.STUDENT;
-        }
-        
-        return Role.STAFF;
-    }
 
     @Override
     public Optional<User> findByLogin(String login) {

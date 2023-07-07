@@ -26,24 +26,34 @@ class UserServiceImplTest {
     UserService userServ;
 
     @Test
-    void addUser_ShouldAddNewUser() {
+    void addUser_ShouldAddNewUserWithStuffRole() {
+        User user = new User("staff", "1234", Role.STAFF, "Alex", "Ognev");
+        when(userRepository.save(user)).thenReturn(user);
+        
+        Optional<User> userAfterSave = userServ.addUser("staff", "1234", "Alex", "Ognev");
+        
+        verify(userRepository).save(user);
+        assertEquals(Role.STAFF, userAfterSave.get().getRole());
+    }
+    
+    @Test
+    void addUser_ShouldAddNewUserWithAdminRole() {
         User user = new User("admin", "1234", Role.ADMIN, "Admin", "admin");
         when(userRepository.save(user)).thenReturn(user);
         
-        Optional<User> userAfterSave = userServ.addUser("admin", "1234", "Admin", "admin", "admin");
+        Optional<User> userAfterSave = userServ.addUser("admin", "1234", "admin", "admin");
         
         verify(userRepository).save(user);
         assertEquals(Role.ADMIN, userAfterSave.get().getRole());
     }
 
     @Test
-    void addUser_ShouldThrewIllegalArgumentException() {
+    void addUser_ShouldThrewIllegalArgumentExceptionUserAlreadyExist() {
         when(userRepository.findByLogin("admin")).thenReturn(Optional.of(new User("admin", "1234", Role.ADMIN, "Admin", "admin")));
         
         Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
-            userServ.addUser("admin", "1234", "Admin", "admin", "admin");
+            userServ.addUser("admin", "1234", "admin", "admin");
         });
         assertNotNull(thrown.getMessage());
     }
-
 }

@@ -12,5 +12,5 @@ public interface UserService extends UserDetailsService {
     @Transactional(readOnly = true)
     Optional<User> findById(Long id);
     @Transactional
-    Optional<User> addUser(String login, String password, String roleName, String firstName, String lastName);
+    Optional<User> addUser(String login, String password, String firstName, String lastName);
 }
