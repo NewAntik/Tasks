@@ -16,3 +16,7 @@ spring:
     prefix=classpath:/templates/
     suffix=.html
     name=Bootstrap
+    
+logging:
+  level:
+    org.springframework.security: debug
