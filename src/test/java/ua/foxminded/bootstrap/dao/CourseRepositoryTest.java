@@ -40,7 +40,7 @@ class CourseRepositoryTest {
                 new Course(101L, "Biology", "Biology Description")
         );
 
-        List<Course> actual = courseRep.findByStudentId(2L);
+        List<Course> actual = courseRep.findByStudentId(4L);
         assertEquals(expected, actual);
     }
 

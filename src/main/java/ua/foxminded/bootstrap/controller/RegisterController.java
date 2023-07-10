@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class RegisterController {
 
-    @GetMapping("/index")
-    public String getWelcomePage() {
-        return "index";
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/register/logout";
     }
 }

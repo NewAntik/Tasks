@@ -19,7 +19,7 @@ public class RoomController {
         this.roomServ = roomService;
     }
     
-    @GetMapping("/room")
+    @GetMapping("/rooms")
     public String getRooomTable(Model model) throws SQLException {
         List<Room> rooms = roomServ.findAll();
         model.addAttribute("rooms", rooms);

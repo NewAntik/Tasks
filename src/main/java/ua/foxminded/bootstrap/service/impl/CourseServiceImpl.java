@@ -12,19 +12,19 @@ import ua.foxminded.bootstrap.service.CourseService;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepository courseRep;
+    private final CourseRepository courseRepository;
 
     public CourseServiceImpl(CourseRepository courseRep) {
-        this.courseRep = courseRep;
+        this.courseRepository = courseRep;
     }
      
     @Override
     public List<Course> findAll() throws SQLException {
-        return courseRep.findAll();
+        return courseRepository.findAll();
     }
 
     @Override
     public List<Course> saveAll(List<Course> courses) throws SQLException {
-        return courseRep.saveAll(courses);
+        return courseRepository.saveAll(courses);
     }
 }

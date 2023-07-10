@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ua.foxminded.bootstrap.models.Teacher;
@@ -28,12 +29,13 @@ class TeacherControllerTest {
     TeacherService teacherServ;
     
     @Test
+    @WithMockUser(roles = "TEACHER")
     void getTeacherTable_shouldShowListOfTeachers() throws Exception {
         when(teacherServ.findAll()).thenReturn(Arrays.asList(
                 new Teacher("local", "12345", "Gosha", "Rast"),
                 new Teacher("yammi", "54321", "Arnold", "Father")
         ));
-        mvc.perform(get("/teacher"))
+        mvc.perform(get("/teachers"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Gosha")))
                 .andExpect(content().string(containsString("Rast")))

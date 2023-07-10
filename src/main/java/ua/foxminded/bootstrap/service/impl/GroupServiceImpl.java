@@ -12,25 +12,25 @@ import ua.foxminded.bootstrap.service.GroupService;
 @Service
 public class GroupServiceImpl implements GroupService {
     
-    private GroupRepository groupRep;
+    private GroupRepository groupRepository;
 
     public GroupServiceImpl(GroupRepository groupRep) {
-        this.groupRep = groupRep;
+        this.groupRepository = groupRep;
     }
     
     @Override
     public List<Group> findWithSpecifiedAmount(Long amount) throws SQLException {
-        return groupRep.findByStudentNum(amount);
+        return groupRepository.findByStudentNum(amount);
     }
 
     @Override
     public List<Group> findAll() throws SQLException {
-        return groupRep.findAll();
+        return groupRepository.findAll();
     }
 
     @Override
     public List<Group> saveAll(List<Group> groups) throws SQLException {
-        return groupRep.saveAll(groups);
+        return groupRepository.saveAll(groups);
     }
 
     

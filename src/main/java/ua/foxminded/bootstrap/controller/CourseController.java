@@ -20,7 +20,7 @@ public class CourseController {
     }
     
     
-    @GetMapping("/course")
+    @GetMapping("/courses")
     public String getCourseTable(Model model) throws SQLException {
         List<Course> courses = courseServ.findAll();
         model.addAttribute("courses", courses);

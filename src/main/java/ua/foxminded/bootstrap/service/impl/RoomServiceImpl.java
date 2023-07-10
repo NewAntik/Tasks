@@ -12,29 +12,29 @@ import ua.foxminded.bootstrap.service.RoomService;
 @Service
 public class RoomServiceImpl implements RoomService {
 
-    private final RoomRepository roomRep;
+    private final RoomRepository roomRepository;
     
     public RoomServiceImpl(RoomRepository roomRepository) {
-        this.roomRep = roomRepository;
+        this.roomRepository = roomRepository;
     }
     
     @Override
     public List<Room> saveAll(List<Room> rooms) throws SQLException {
-        return roomRep.saveAll(rooms);
+        return roomRepository.saveAll(rooms);
     }
 
     @Override
     public Room add(String name) throws SQLException {
-        return roomRep.save(new Room(name));
+        return roomRepository.save(new Room(name));
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-        roomRep.deleteById(id);
+        roomRepository.deleteById(id);
     }
 
     @Override
     public List<Room> findAll() throws SQLException {
-        return roomRep.findAll();
+        return roomRepository.findAll();
     }
 }

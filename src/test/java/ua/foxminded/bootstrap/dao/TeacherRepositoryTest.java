@@ -20,11 +20,17 @@ import ua.foxminded.bootstrap.models.Teacher;
 class TeacherRepositoryTest {
 
     @Autowired
-    TeacherRepository teacherRep;
+    TeacherRepository teacherRepository;
+    
+    @Test
+    void findByLogin_ShouldReturnUserWithSpecifiedLogin() {
+        Teacher fromDb = teacherRepository.findByLogin("teacher1").get();
+        assertEquals("teacher1", fromDb.getLogin());
+    }
     
     @Test
     void findBySpecialization_ShouldReturnListOfTeachersBySpecialization() {
-        List<Teacher> teachers = teacherRep.findBySpecialization("Math");
+        List<Teacher> teachers = teacherRepository.findBySpecialization("Math");
         assertEquals(2, teachers.size());
         assertEquals(3L, teachers.get(0).getId());
         assertEquals(5L, teachers.get(1).getId());
@@ -32,7 +38,7 @@ class TeacherRepositoryTest {
     
     @Test
     void findByFirstName_ShouldReturnTeacherByTeacherFirstName() {
-        Teacher teacher = teacherRep.findByFirstName("Ann");
+        Teacher teacher = teacherRepository.findByFirstName("Ann").get();
         assertEquals("Ann", teacher.getFirstName());
         assertEquals(3L, teacher.getId());
     }

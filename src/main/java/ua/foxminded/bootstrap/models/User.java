@@ -5,7 +5,7 @@ import ua.foxminded.bootstrap.models.utils.Role;
 
 import java.util.Objects;
 
-@Entity(name = "users")
+@Entity(name = "User")
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role_type")
@@ -37,6 +37,14 @@ public class User {
     public User(String login, String passwordHash, String firstName, String lastName) {
         this.login = login;
         this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(String login, String passwordHash, Role role, String firstName, String lastName) {
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
