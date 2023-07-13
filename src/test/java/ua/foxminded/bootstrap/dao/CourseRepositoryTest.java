@@ -10,8 +10,10 @@ import org.springframework.test.context.jdbc.Sql;
 import ua.foxminded.bootstrap.models.Course;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {CourseRepository.class}))
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -20,6 +22,18 @@ class CourseRepositoryTest {
 
     @Autowired
     CourseRepository courseRepository;
+    
+    @Test
+    void findRelationGroupCourse_ShouldReturnCourseReletedToGroup() {
+        Optional<Course> course = courseRepository.findRelationGroupCourse(1L, 100L);
+        assertTrue(course.get().getGroups().stream().anyMatch(group -> group.getId().equals(1L)));
+    }
+    
+    @Test
+    void findRelationTeacherCourse_ShouldReturnCourseReletedToTeacher() {
+        Optional<Course> course = courseRepository.findRelationTeacherCourse(3L, 100L);
+        assertTrue(course.get().getTeachers().stream().anyMatch(teacher -> teacher.getId().equals(3L)));
+    }
     
     @Test
     void findByTeacherID_ShouldReturnCourseListOfCourseReletedWithTeacherByTeacherId() {
