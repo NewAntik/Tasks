@@ -67,8 +67,8 @@ public class WebSecurityConfiguration {
                         .requestMatchers(STUDENT_LIST_URLS).hasRole("STUDENT")
                         .requestMatchers(TEACHER_LIST_URLS).hasRole("TEACHER")
                         .requestMatchers(STAFF_LIST_URLS).hasRole("STAFF")
-                        .requestMatchers("/courses").hasAnyRole(ROLES_LIST)
                         .requestMatchers("/add-course").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/courses").hasAnyRole(ROLES_LIST)
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.passwordParameter("password")
