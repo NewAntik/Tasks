@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}" />
+<style type="text/css">
+body {
+    background-image: url("images/creation.jpg");
+}
+
+.user-form {
+    width: 100%;
+    max-width: 200px;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.user-form .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 7px;
+    font-size: 15px;
+}
+
+.user-form input[type="text"]#description {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 100px;
+}
+
+.alert-success {
+    width: 100%;
+    max-width: 200px;
+    margin: 30px auto;
+    padding: 5px;
+    background-color: #dff0d8;
+    border: 2px solid #d0e9c6;
+    color: #3c763d;
+}
+
+.alert-danger {
+    width: 100%;
+    max-width: 200px;
+    margin: 30px auto;
+    padding: 5px;
+    background-color: #f2dede;
+    border: 2px solid #ebccd1;
+    color: #a94442;
+}
+</style>
+<body class="text-center">
+    <form class="user-form" method="post" action="/reassign-group">
+        <div class="mb-3">
+            <label for="groupId" class="form-label">Group id:</label>
+              <input type="number" class="form-control" id="groupId" name="groupId"required>
+        </div>
+
+        <div class="mb-3">
+            <label for="courseId" class="form-label">Course id:</label>
+              <input type="number" class="form-control" id="courseId" name="courseId"required>
+        </div>
+        <button type="submit" class="btn btn-primary">Reassign Group to Course</button>
+        <div th:if="${successMessage}" class="alert alert-success"
+            role="alert">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <p th:text="${errorMessage}"></p>
+        </div>
+    </form>
+</body>
+</html>
