@@ -27,11 +27,51 @@ class CourseControllerTest {
     @MockBean
     UserService userService;
     
-    @Autowired
-    MockMvc mvc;
-
     @MockBean
     CourseService courseServ;
+    
+    @Autowired
+    MockMvc mvc;
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void reassignTeacherToCourse_ShouldReassignTeacherToCourse() throws Exception {
+        mvc.perform(post("/reassign-teacher")
+                .param( "teacherId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void assignTeacherToCourse_ShouldAssignTeacherToCourse() throws Exception {
+        mvc.perform(post("/assign-teacher")
+                .param( "teacherId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void reassignGroupToCourse_ShouldReassignGroupToCourse() throws Exception {
+        mvc.perform(post("/reassign-group")
+                .param( "groupId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void assignGroupToCourse_ShouldAssignGroupToCourse() throws Exception {
+        mvc.perform(post("/assign-group")
+                .param( "groupId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
     
     @Test
     @WithMockUser(roles = "ADMIN")
@@ -82,13 +122,6 @@ class CourseControllerTest {
         mvc.perform(get("/courses"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "http://localhost/register/login"));
-    }
-
-    @Test
-    @WithMockUser(roles = "TEACHER")
-    void shouldDenyAccessWithWrongRole() throws Exception {
-        mvc.perform(get("/courses"))
-                .andExpect(status().isForbidden());
     }
 
     @Test

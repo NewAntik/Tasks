@@ -24,6 +24,74 @@ public class CourseController {
         this.courseService = courseService;
     }
     
+    @PostMapping("/reassign-teacher")
+    public String reassignTeacherToCourse(@RequestParam("teacherId") Long teacherId, @RequestParam("courseId") Long courseId, Model model) throws SQLException {
+        try {
+            courseService.reassignTeacherToCourse(teacherId, courseId);
+            model.addAttribute(SUCCESS_MESSAGE, SUCCESS);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+        
+        return "courses/reassign-teacher";
+    }
+    
+    @PostMapping("/reassign-group")
+    public String reassignGroupToCourse(@RequestParam("groupId") Long groupId, @RequestParam("courseId") Long courseId, Model model) throws SQLException {
+        try {
+            courseService.reassignGroupToCourse(groupId, courseId);
+            model.addAttribute(SUCCESS_MESSAGE, SUCCESS);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+        
+        return "courses/reassign-group";
+    }
+    
+    @PostMapping("/assign-teacher")
+    public String assignTeacherToCourse(@RequestParam("teacherId") Long teacherId, @RequestParam("courseId") Long courseId, Model model) throws SQLException {
+        try {
+            courseService.assignTeacherToCourse(teacherId, courseId);
+            model.addAttribute(SUCCESS_MESSAGE, SUCCESS);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+        
+        return "courses/assign-teacher";
+    }
+    
+    @PostMapping("/assign-group")
+    public String assignGroupToCourse(@RequestParam("groupId") Long groupId, @RequestParam("courseId") Long courseId, Model model) throws SQLException {
+        try {
+            courseService.assignGroupToCourse(groupId, courseId);
+            model.addAttribute(SUCCESS_MESSAGE, SUCCESS);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+        
+        return "courses/assign-group";
+    }
+    
+    @GetMapping("/assign-teacher-page")
+    public String getAssignTeacherPage() throws SQLException {
+        return "courses/assign-teacher";
+    }
+    
+    @GetMapping("/assign-group-page")
+    public String getAssignGroupPage() throws SQLException {
+        return "courses/assign-group";
+    }
+    
+    @GetMapping("/reassign-teacher-page")
+    public String getReassignTeacherPage() throws SQLException {
+        return "courses/reassign-teacher";
+    }
+    
+    @GetMapping("/reassign-group-page")
+    public String getReassignGroupPage() throws SQLException {
+        return "courses/reassign-group";
+    }
+    
     @GetMapping("/courses")
     public String getCourseTable(Model model) throws SQLException {
         List<Course> courses = courseService.findAll();
@@ -82,4 +150,6 @@ public class CourseController {
         
         return "courses/add";
     }
+    
+    
 }
