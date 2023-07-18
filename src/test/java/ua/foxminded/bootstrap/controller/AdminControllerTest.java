@@ -41,8 +41,6 @@ class AdminControllerTest {
         .andExpect(header().string("Location", "http://localhost/register/login"));
     }
     
-    
-    
     @Test
     @WithMockUser(roles = "TEACHER")
     void shouldDenyAccessWithWrongRole() throws Exception {

@@ -19,15 +19,31 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {RoomController.class})
+@WebMvcTest(controllers = { RoomController.class })
 class RoomControllerTest {
-    
+
     @Autowired
     private MockMvc mvc;
-    
+
     @MockBean
     RoomService roomServ;
-    
+
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void getRoomSchedule_shouldShowFreeAndBusyRooms() throws Exception {
+        when(roomServ.findAll()).thenReturn(Arrays.asList(
+                new Room("Lecture hall #1"),
+                new Room("Lecture hall #2"),
+                new Room("Lecture hall #3")
+         ));
+        
+        mvc.perform(get("/rooms-schedule"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Lecture hall #1")))
+                .andExpect(content().string(containsString("Lecture hall #2")))
+                .andExpect(content().string(containsString("Lecture hall #3")));
+    }
+
     @Test
     @WithMockUser(roles = "ADMIN")
     void getRooomTable_shouldShowListOfRooms() throws Exception {

@@ -3,6 +3,8 @@ package ua.foxminded.bootstrap.models;
 import jakarta.persistence.*;
 
 import java.util.Set;
+import java.util.HashSet;
+
 
 @Entity
 @Table(name = "courses")
@@ -20,13 +22,11 @@ public class Course {
     private String description;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "teachers_courses", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = 
-            @JoinColumn(name = "teacher_ref"))
+    @JoinTable(name = "teachers_courses", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = @JoinColumn(name = "teacher_ref"))
     private Set<Teacher> teachers;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "courses_groups", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = 
-            @JoinColumn(name = "group_ref"))
+    @JoinTable(name = "courses_groups", joinColumns = @JoinColumn(name = "course_ref"), inverseJoinColumns = @JoinColumn(name = "group_ref"))
     private Set<Group> groups;
 
     public Course() {
@@ -42,6 +42,8 @@ public class Course {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.teachers = new HashSet<>();
+        this.groups = new HashSet<>();
     }
 
     public Long getId() {
@@ -59,9 +61,25 @@ public class Course {
     public Set<Teacher> getTeachers() {
         return teachers;
     }
-    
+
     public Set<Group> getGroups() {
         return groups;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teachers.add(teacher);
+    }
+
+    public void setGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void deleteTeacher(Teacher teacher) {
+        this.teachers.remove(teacher);
+    }
+
+    public void deleteGroup(Group group) {
+        this.groups.remove(group);
     }
 
     @Override

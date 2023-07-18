@@ -10,8 +10,10 @@ import org.springframework.test.context.jdbc.Sql;
 import ua.foxminded.bootstrap.models.Course;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {CourseRepository.class}))
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -19,7 +21,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CourseRepositoryTest {
 
     @Autowired
-    CourseRepository courseRep;
+    CourseRepository courseRepository;
+    
+    @Test
+    void findRelationGroupCourse_ShouldReturnCourseReletedToGroup() {
+        Optional<Course> course = courseRepository.findRelationGroupCourse(1L, 100L);
+        assertTrue(course.get().getGroups().stream().anyMatch(group -> group.getId().equals(1L)));
+    }
+    
+    @Test
+    void findRelationTeacherCourse_ShouldReturnCourseReletedToTeacher() {
+        Optional<Course> course = courseRepository.findRelationTeacherCourse(3L, 100L);
+        assertTrue(course.get().getTeachers().stream().anyMatch(teacher -> teacher.getId().equals(3L)));
+    }
     
     @Test
     void findByTeacherID_ShouldReturnCourseListOfCourseReletedWithTeacherByTeacherId() {
@@ -29,7 +43,7 @@ class CourseRepositoryTest {
                 new Course(103L, "Music", "Music Description")
         );
         
-        List<Course> actual = courseRep.findByTeacherId(3L);
+        List<Course> actual = courseRepository.findByTeacherId(3L);
         assertEquals(expected, actual);
     }
 
@@ -40,13 +54,13 @@ class CourseRepositoryTest {
                 new Course(101L, "Biology", "Biology Description")
         );
 
-        List<Course> actual = courseRep.findByStudentId(4L);
+        List<Course> actual = courseRepository.findByStudentId(4L);
         assertEquals(expected, actual);
     }
 
     @Test
     void findByName_ShouldReturnCourseByName() {
-        Course medicine = courseRep.findByName("Medicine");
+        Course medicine = courseRepository.findByName("Medicine");
         assertEquals("Medicine", medicine.getName());
         assertEquals(106L, medicine.getId());
     }

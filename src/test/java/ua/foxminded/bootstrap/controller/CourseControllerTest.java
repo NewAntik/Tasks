@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -26,24 +27,101 @@ class CourseControllerTest {
     @MockBean
     UserService userService;
     
-    @Autowired
-    private MockMvc mvc;
-
     @MockBean
-    private CourseService courseServ;
+    CourseService courseServ;
+    
+    @Autowired
+    MockMvc mvc;
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void reassignTeacherToCourse_ShouldReassignTeacherToCourse() throws Exception {
+        mvc.perform(post("/reassign-teacher")
+                .param( "teacherId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void assignTeacherToCourse_ShouldAssignTeacherToCourse() throws Exception {
+        mvc.perform(post("/assign-teacher")
+                .param( "teacherId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void reassignGroupToCourse_ShouldReassignGroupToCourse() throws Exception {
+        mvc.perform(post("/reassign-group")
+                .param( "groupId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "STAFF")
+    void assignGroupToCourse_ShouldAssignGroupToCourse() throws Exception {
+        mvc.perform(post("/assign-group")
+                .param( "groupId", "1")
+                .param("courseId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void updateCourse_ShouldUpdateCourse() throws Exception {
+        mvc.perform(post("/update-course-by-id")
+                .param( "id", "1")
+                .param("newName", "New Name")
+                .param("newDescription", "New Description"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void saveNewCourse_ShouldSaveNewCourse() throws Exception {
+        mvc.perform(post("/save-course")
+                .param( "name", "Biology")
+                .param("description", "Biology Description"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
+    
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void deleteCourse_ShouldDeleteCourse() throws Exception {
+        mvc.perform(post("/delete-course-by-id")
+                .param( "id", "1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("successMessage"));
+    }
 
+    @Test
+    void addNewCourse_ShouldRedirectToLoginPage() throws Exception {
+        mvc.perform(get("/add-course"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(header().string("Location", "http://localhost/register/login"));
+    }
+    
+    @Test
+    void deleteCourse_ShouldRedirectToLoginPage() throws Exception {
+        mvc.perform(get("/delete-course"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(header().string("Location", "http://localhost/register/login"));
+    }
+    
     @Test
     void shouldRedirectToLoginPage() throws Exception {
         mvc.perform(get("/courses"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "http://localhost/register/login"));
-    }
-
-    @Test
-    @WithMockUser(roles = "TEACHER")
-    void shouldDenyAccessWithWrongRole() throws Exception {
-        mvc.perform(get("/courses"))
-                .andExpect(status().isForbidden());
     }
 
     @Test

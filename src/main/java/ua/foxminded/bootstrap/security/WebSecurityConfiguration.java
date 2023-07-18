@@ -29,9 +29,29 @@ public class WebSecurityConfiguration {
     private static final String[] ADMIN_LIST_URLS = {
             "/admin/**",
             "/welcome-admin",
-            "/courses",
+            "/delete-course",
             "/timetables",
             "/rooms"
+    };
+    private static final String[] STUDENT_LIST_URLS = {
+            "/students/**",
+            "/welcome-student",
+            "/students"
+    };
+    private static final String[] TEACHER_LIST_URLS = {
+            "/teachers/**",
+            "/welcome-teacher",
+            "/teachers"
+    };
+    private static final String[] STAFF_LIST_URLS = {
+            "/staff/**",
+            "/welcome-staff"
+    };
+    private static final String[] ROLES_LIST= {
+            "ADMIN",
+            "STAFF",
+            "TEACHER",
+            "STUDENT"
     };
     
     @Autowired
@@ -44,8 +64,11 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
                         .requestMatchers(ADMIN_LIST_URLS).hasRole("ADMIN")
-                        .requestMatchers("/students/**", "/welcome-student", "/students").hasRole("STUDENT")
-                        .requestMatchers("/teachers/**", "/welcome-teacher", "/teachers").hasRole("TEACHER")
+                        .requestMatchers(STUDENT_LIST_URLS).hasRole("STUDENT")
+                        .requestMatchers(TEACHER_LIST_URLS).hasRole("TEACHER")
+                        .requestMatchers(STAFF_LIST_URLS).hasRole("STAFF")
+                        .requestMatchers("/add-course").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/courses").hasAnyRole(ROLES_LIST)
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.passwordParameter("password")
@@ -74,9 +97,9 @@ public class WebSecurityConfiguration {
             } else if (roles.contains("ROLE_TEACHER")) {
                 LOGGER.info("Redirecting to /welcome-teacher");
                 response.sendRedirect("/welcome-teacher");
-            } else if (roles.contains("ROLE_STUFF")) {
-                LOGGER.info("Redirecting to /welcome-stuff");
-                response.sendRedirect("/welcome-stuff");
+            } else if (roles.contains("ROLE_STAFF")) {
+                LOGGER.info("Redirecting to /welcome-staff");
+                response.sendRedirect("/welcome-staff");
             } else {
                 response.sendRedirect(LOGIN);
             }
