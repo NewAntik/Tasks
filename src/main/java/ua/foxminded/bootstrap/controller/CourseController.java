@@ -150,6 +150,4 @@ public class CourseController {
         
         return "courses/add";
     }
-    
-    
 }

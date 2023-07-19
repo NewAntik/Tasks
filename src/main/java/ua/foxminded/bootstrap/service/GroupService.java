@@ -2,6 +2,7 @@ package ua.foxminded.bootstrap.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,4 +18,13 @@ public interface GroupService {
     
     @Transactional(readOnly = true)
     List<Group> findWithSpecifiedAmount(Long amount) throws SQLException;
+    
+    @Transactional
+    Optional<Group> addNewGroup(String name) throws SQLException;
+    
+    @Transactional
+    Optional<Group> deleteGroupById(Long id) throws SQLException;
+    
+    @Transactional
+    Optional<Group> updateGroup(Long id, String newName) throws SQLException;
 }

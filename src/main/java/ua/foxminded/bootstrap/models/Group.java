@@ -25,6 +25,10 @@ public class Group {
 
     public Group() {
     }
+    
+    public Group(Long id, String name) {
+        this(id, name, new HashSet<>(), new HashSet<>());
+    }
 
     public Group(String name) {
         this(null, name, new HashSet<>(), new HashSet<>());
