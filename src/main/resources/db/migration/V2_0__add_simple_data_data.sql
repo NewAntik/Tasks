@@ -27,9 +27,9 @@ VALUES ('AA-01'),
 INSERT INTO users (login, password, role_type, role, group_ref, first_name, last_name)
 VALUES ('admin', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'admin', 'ADMIN', null, 'Main', 'Main'),
        ('staff', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'User', 'STAFF', null, 'Henry', 'Karlos'), 
-       ('student1', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', null, 'Jon', 'Cover'),
+       ('student1', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', 1, 'Jon', 'Cover'),
        ('teacher1', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Ann', 'Pinkerton'),
-       ('student2', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', null, 'Scott', 'Swann'),
+       ('student2', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'student', 'STUDENT', 1, 'Scott', 'Swann'),
        ('teacher3', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
        ('teacher7', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
        
