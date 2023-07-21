@@ -24,36 +24,12 @@ public class WebSecurityConfiguration {
             "/webjars/**",
             "/css/**",
             "/js/**",
-            "/images/**"
+            "/images/**",
+            "/students/{groupId}",
+            "/courses",
+            "/groups"
     };
-    private static final String[] ADMIN_LIST_URLS = {
-            "/admin/**",
-            "/welcome-admin",
-            "/delete-course",
-            "/timetables",
-            "/rooms"
-    };
-    private static final String[] STUDENT_LIST_URLS = {
-            "/students/**",
-            "/welcome-student",
-            "/students"
-    };
-    private static final String[] TEACHER_LIST_URLS = {
-            "/teachers/**",
-            "/welcome-teacher",
-            "/teachers"
-    };
-    private static final String[] STAFF_LIST_URLS = {
-            "/staff/**",
-            "/welcome-staff"
-    };
-    private static final String[] ROLES_LIST= {
-            "ADMIN",
-            "STAFF",
-            "TEACHER",
-            "STUDENT"
-    };
-    
+
     @Autowired
     UserService userService;
 
@@ -63,12 +39,11 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers(ADMIN_LIST_URLS).hasRole("ADMIN")
-                        .requestMatchers(STUDENT_LIST_URLS).hasRole("STUDENT")
-                        .requestMatchers(TEACHER_LIST_URLS).hasRole("TEACHER")
-                        .requestMatchers(STAFF_LIST_URLS).hasRole("STAFF")
-                        .requestMatchers("/add-course").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/courses").hasAnyRole(ROLES_LIST)
+                        .requestMatchers("/update-course","/add-course").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/admin/**", "/delete-course", "/timetables", "/rooms", "/students").hasRole("ADMIN")
+                        .requestMatchers("/staff/**", "/students").hasRole("STAFF")
+                        .requestMatchers("/students/**").hasRole("STUDENT")
+                        .requestMatchers("/teachers/**").hasRole("TEACHER")
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.passwordParameter("password")
