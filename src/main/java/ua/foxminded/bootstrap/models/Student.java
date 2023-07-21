@@ -17,6 +17,13 @@ public class Student extends User {
     public Student() {
         super();
     }
+    
+    public Student(Long id, String login, String passwordHash, String firstName, String lastName, Group group) {
+        super(login, passwordHash, firstName, lastName);
+        this.id = id;
+        this.group = group;
+        this.role = Role.STUDENT;
+    }
 
     public Student(String login, String passwordHash, String firstName, String lastName, Group group) {
         super(login, passwordHash, firstName, lastName);
@@ -29,6 +36,6 @@ public class Student extends User {
     } 
     
     public void setGroup(Group group) {
-        this.group = group;
-    } 
+        this.group = group; 
+    }
 }

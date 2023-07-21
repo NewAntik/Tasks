@@ -17,7 +17,7 @@ CREATE TABLE users
 (
     id         BIGINT      NOT NULL DEFAULT nextval('users_id_seq'),
     login      VARCHAR(10) UNIQUE,
-    password   VARCHAR(60),
+    password               VARCHAR(60),
     role_type  TEXT        NOT NULL,
     role       TEXT        NOT NULL,
     group_ref  BIGINT references groups (id),
@@ -25,6 +25,9 @@ CREATE TABLE users
     last_name  VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
+
+ALTER TABLE users ADD CONSTRAINT check_student_group_ref
+CHECK(NOT(role_type = 'student' AND group_ref IS NULL));
 
 CREATE TABLE rooms
 (

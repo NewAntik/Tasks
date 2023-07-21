@@ -15,7 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ua.foxminded.bootstrap.dao.GroupRepository;
+import ua.foxminded.bootstrap.dao.StudentRepository;
 import ua.foxminded.bootstrap.models.Group;
+import ua.foxminded.bootstrap.models.Student;
 import ua.foxminded.bootstrap.service.GroupService;
 
 @SpringBootTest(classes = {GroupServiceImpl.class})
@@ -23,6 +25,9 @@ class GroupServiceImplTest {
     
     @MockBean
     GroupRepository groupRepository;
+    
+    @MockBean
+    StudentRepository studentRepository;
     
     @Autowired
     GroupService groupServiceImpl;
@@ -32,6 +37,40 @@ class GroupServiceImplTest {
     @BeforeEach
     void addData() {
         group = new Group (1L, "Name");
+    }
+    
+    @Test
+    void reassignStudentToGroup_ShouldThrewIllegalArgumentExceptionGroupDoesntExist() {
+        when(groupRepository.findById(1L)).thenReturn(Optional.empty());
+        when(studentRepository.findById(1L)).thenReturn(Optional.of(new Student()));
+        
+        Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+            groupServiceImpl.reassignStudentToNewGroup(1L, 2L, 1L);
+        });
+        assertNotNull(thrown.getMessage());
+    }
+    
+    @Test
+    void reassignStudentToGroup_ShouldThrewIllegalArgumentExceptionStudentDoesntExist() {
+        when(groupRepository.findById(1L)).thenReturn(Optional.of(new Group("AA-01")));
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+        
+        Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+            groupServiceImpl.reassignStudentToNewGroup(1L, 2L, 1L);
+        });
+        assertNotNull(thrown.getMessage());
+    }
+    
+    @Test
+    void reassignStudentToGroup_ShouldReassignStudentToGroup() throws SQLException {
+        when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
+        when(groupRepository.findById(2L)).thenReturn(Optional.of(group));
+        when(studentRepository.findById(1L)).thenReturn(Optional.of(new Student()));
+        when(groupRepository.checkRelationStudentGroup(1L, 1L)).thenReturn(Optional.of(new Group()));
+
+        groupServiceImpl.reassignStudentToNewGroup(1L, 2L, 1L);
+        verify(groupRepository).save(group);
+        verify(studentRepository).save(new Student());
     }
     
     @Test

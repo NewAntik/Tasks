@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +23,47 @@ public class GroupController {
     
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+    
+    @GetMapping("/students/{groupId}")
+    public String showStudents(@PathVariable Long groupId, Model model) {
+        Group group = groupService.getGroupById(groupId);
+        try {
+            if(group.getStudents().isEmpty()) {
+                throw new IllegalArgumentException("This reletion student to group doesn't exist!");
+            } else {
+                model.addAttribute("groupName", group.getName());
+                model.addAttribute("students", group.getStudents());
+                
+                return "groups/relation-students";
+            }
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+                
+        return "groups/list-all";
+    }
+    
+    @PostMapping("/reassign-student-to-group")
+    public String reassignStudentToNewGroup(@RequestParam("studentId") Long studentId, @RequestParam("newGroupId") Long newGroupId,@RequestParam("relatedGroupId") Long relatedGroupId, Model model) throws SQLException {
+        try {
+            groupService.reassignStudentToNewGroup(studentId, newGroupId, relatedGroupId);
+            model.addAttribute(SUCCESS_MESSAGE, SUCCESS);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute(ERROR, e.getMessage());
+        }
+        
+        return "groups/reassign";
+    }
+    
+    @GetMapping("/reassign-student")
+    public String reassignStudentPage() throws SQLException {
+        return "groups/reassign";
+    }
+    
+    @GetMapping("/assign-student")
+    public String assignStudentPage() throws SQLException {
+        return "groups/assign";
     }
     
     @GetMapping("/add-group")

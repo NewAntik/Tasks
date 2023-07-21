@@ -57,5 +57,5 @@ public class StudentServiceImpl implements StudentService {
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NullPointerException("Group with this id \"" + groupId + "\" doesn't exist!" ));
         
         return Optional.of(studentRepository.save(new Student(login, passwordEncoder.encode(password), firstName, lastName, group)));
-    } 
+    }
 }

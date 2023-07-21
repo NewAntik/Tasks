@@ -27,4 +27,10 @@ public interface GroupService {
     
     @Transactional
     Optional<Group> updateGroup(Long id, String newName) throws SQLException;
+
+    @Transactional
+    void reassignStudentToNewGroup(Long studentId, Long groupId, Long relatedGroupId);
+
+    @Transactional
+    Group getGroupById(Long groupId);
 }

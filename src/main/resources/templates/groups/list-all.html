@@ -16,20 +16,23 @@
 							<th>ID</th>
 							<th>Name</th>
 							<th>Course</th>
-							<th>Student</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="group : ${groups}">
 							<td th:text="${group.id}"></td>
-							<td th:text="${group.name}"></td>
+							<td><a th:href="@{/students/{groupId}(groupId=${group.id})}"
+								th:text="${group.name}"></a></td>
 							<td th:text="${#strings.setJoin(group.courses,',')}"></td>
-							<td th:text="${#strings.setJoin(group.students,',')}"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+	</div>
+
+	<div th:if="${errorMessage}" class="alert alert-danger text-center" role="alert">
+		<p th:text="${errorMessage}"></p>
 	</div>
 </body>
 </html>

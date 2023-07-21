@@ -25,7 +25,7 @@ public class Group {
 
     public Group() {
     }
-    
+
     public Group(Long id, String name) {
         this(id, name, new HashSet<>(), new HashSet<>());
     }
@@ -48,19 +48,30 @@ public class Group {
     public String getName() {
         return name;
     }
-    
+
+    public void setStudent(Student student) {
+        this.students.add(student);
+
+    }
+
+    public void deleteStudent(Student student) {
+        this.students.remove(student);
+    }
+
     public Set<Course> getCourses() {
         return courses;
     }
-    
+
     public Set<Student> getStudents() {
         return students;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Group group = (Group) o;
         return Objects.equals(id, group.id) && Objects.equals(name, group.name);
     }

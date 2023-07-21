@@ -13,22 +13,22 @@ import ua.foxminded.bootstrap.service.StudentService;
 @Controller
 public class StudentController {
 
-    private StudentService studentServ;
+    private StudentService studentService;
     
     public StudentController(StudentService studentService) {
-        this.studentServ = studentService;
+        this.studentService = studentService;
     }
     
     @GetMapping("/students")
     public String getStudentTable(Model model) throws SQLException {
-        List<Student> students = studentServ.findAll();
+        List<Student> students = studentService.findAll();
         model.addAttribute("students", students);
         
         return "students/list-all";
     }
     
     @GetMapping("/welcome-student")
-    public String getStudentWelcome(Model model){
+    public String getStudentWelcome(){
         return "students/welcome";
     }
 }
