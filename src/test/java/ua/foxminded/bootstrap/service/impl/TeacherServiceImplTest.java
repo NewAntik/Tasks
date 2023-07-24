@@ -33,6 +33,16 @@ class TeacherServiceImplTest {
     TeacherServiceImpl teacherService;
 
     @Test
+    void findById_ShouldTrewIllegalArgumentExceptionTeacherDoesntExist() throws SQLException {
+        when(teacherRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+            teacherService.findById(1L);
+        });
+        assertNotNull(thrown.getMessage());
+    }
+    
+    @Test
     void add_ShouldReturnListOfTeacher() throws SQLException {
         List<Teacher> teachers = new ArrayList<>(Arrays.asList(
                 new Teacher("teacher", "teacher","teacher", "teacher")

@@ -2,6 +2,8 @@ package ua.foxminded.bootstrap.controller;
 
 import static org.mockito.Mockito.when;
 
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.models.Teacher;
 import ua.foxminded.bootstrap.service.TeacherService;
 
@@ -18,6 +21,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = {TeacherController.class})
 class TeacherControllerTest {
@@ -27,6 +32,22 @@ class TeacherControllerTest {
     
     @MockBean
     TeacherService teacherServ;
+    
+    @Test
+    @WithMockUser(roles = "TEACHER")
+    void showStudents_ShouldSowListOfStudentReletedWiSpecifiedGroup() throws Exception { 
+        Long teacherId = 1L;
+        Set<Course> specializations = new HashSet<>();
+        specializations.add(new Course("Math", "Math Description"));
+
+        when(teacherServ.findById(teacherId)).thenReturn(new Teacher("teacher1", "1234", "Yakof", "Jorson", specializations));
+
+        mvc.perform(get("/specializations/{teacherId}", teacherId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("teachers/its-courses"))
+                .andExpect(model().attributeExists("teacherName", "specializations"))
+                .andExpect(model().attribute("specializations", specializations));
+    }
     
     @Test
     @WithMockUser(roles = "TEACHER")

@@ -17,6 +17,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     private final PasswordEncoder passwordEncoder;
     private final TeacherRepository teacherRepository;
+
     
     public TeacherServiceImpl(TeacherRepository teacherRepisitory, PasswordEncoder passwordEncoder) {
         this.teacherRepository = teacherRepisitory;
@@ -65,4 +66,11 @@ public class TeacherServiceImpl implements TeacherService{
     public Optional<Teacher> findByName(String username) {
         return teacherRepository.findByFirstName(username);
     }
+
+    @Override
+    public Teacher findById(Long teacherId) {
+        return teacherRepository.findById(teacherId).orElseThrow(
+                () -> new IllegalArgumentException("Teacher with this id \"" + teacherId + "\" doesn't exist!"));
+    }
+
 }
