@@ -39,7 +39,7 @@ public class TeacherController {
         Teacher teacher = teacherServ.findById(teacherId);
         try {
             if(teacher.getSpecialization().isEmpty()) {
-                throw new IllegalArgumentException("This reletion teacher doesn't have any specialization exist!");
+                throw new IllegalArgumentException("This teacher doesn't have any specialization!");
             } else {
                 model.addAttribute("teacherName", teacher.getFirstName());
                 model.addAttribute("specializations", teacher.getSpecialization());
