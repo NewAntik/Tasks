@@ -33,3 +33,6 @@ VALUES ('admin', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa',
        ('teacher3', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Yudong', 'Tang'),
        ('teacher7', '$2a$10$M2Tyh1FN6UI7/JCCm5hpTukZ9M2cIYeLTQPWoCwW5NRS.boZH5jPa', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
        
+INSERT INTO timetables (lesson_num, date_ref, room_ref, teacher_ref, course_ref, group_ref)
+VALUES (6, '1922-02-02', 1, 4, 1, 1);
+       
