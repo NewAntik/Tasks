@@ -27,7 +27,8 @@ public class WebSecurityConfiguration {
             "/images/**",
             "/students/{groupId}",
             "/courses",
-            "/groups"
+            "/groups",
+            "/timetables"
     };
 
     @Autowired
@@ -39,8 +40,8 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers("/update-course","/add-course").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/admin/**", "/delete-course", "/timetables", "/rooms", "/students").hasRole("ADMIN")
+                        .requestMatchers("/update-course","/add-course", "/timetables/**").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/admin/**", "/delete-course", "/rooms", "/students").hasRole("ADMIN")
                         .requestMatchers("/staff/**", "/students").hasRole("STAFF")
                         .requestMatchers("/students/**").hasRole("STUDENT")
                         .requestMatchers("/teachers/**").hasRole("TEACHER")

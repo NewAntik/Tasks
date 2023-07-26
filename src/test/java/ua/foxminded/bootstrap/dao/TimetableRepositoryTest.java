@@ -2,6 +2,9 @@ package ua.foxminded.bootstrap.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,6 +22,30 @@ class TimetableRepositoryTest {
 
     @Autowired
     TimetableRepository timetableRep;
+    
+    @Test
+    void findByGroupLessonData_ShouldReturnTimetableByGroupLessonData() {
+        Optional<Timetable> timetable = timetableRep.findByGroupLessonData(2L, 4l, LocalDate.of(2023, 06, 22));
+        assertEquals(2, timetable.get().getId());
+    }
+    
+    @Test
+    void findByCourseLessonData_ShouldReturnTimetableByCourseLessonData() {
+        Optional<Timetable> timetable = timetableRep.findByCourseLessonData(100L, 5l, LocalDate.of(2023, 06, 22));
+        assertEquals(1, timetable.get().getId());
+    }
+    
+    @Test
+    void findByTeacherLessonData_ShouldReturnTimetableByTeacherLessonData() {
+        Optional<Timetable> timetable = timetableRep.findByTeacherLessonData(3L, 5l, LocalDate.of(2023, 06, 22));
+        assertEquals(1, timetable.get().getId());
+    }
+    
+    @Test
+    void findByRoomLessonData_ShouldReturnTimetableByRoomLessonData() {
+        Optional<Timetable> timetable = timetableRep.findByRoomLessonData(1L, 5l, LocalDate.of(2023, 06, 22));
+        assertEquals(1, timetable.get().getId());
+    }
 
     @Test
     void findByStudentId_ShouldReturnTimetableByStudentId() {
@@ -35,7 +62,7 @@ class TimetableRepositoryTest {
     @Test
     void findByTeacherId_ShouldReturnTimetableByTeacherId() {
         Timetable timetable = timetableRep.findByTeacherId(5L);
-        assertEquals(5, timetable.getId());
+        assertEquals(2, timetable.getId());
     }
     
     @Test
@@ -46,7 +73,7 @@ class TimetableRepositoryTest {
     
     @Test
     void findByGroupId_ShouldReturnTimetableByGroupId() {
-        Timetable timetable = timetableRep.findByGroupId(4L);
-        assertEquals(4, timetable.getId());
+        Timetable timetable = timetableRep.findByGroupId(3L);
+        assertEquals(3, timetable.getId());
     }
 }

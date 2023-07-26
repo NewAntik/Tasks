@@ -21,4 +21,7 @@ public interface TimetableService {
     
     @Transactional
     Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum) throws SQLException;
+    
+    @Transactional
+    void update(Long scheduleId, Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum)throws SQLException;
 }
