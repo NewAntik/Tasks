@@ -54,7 +54,7 @@ public class TimetableController {
     }
     
     @PostMapping("/delete-exist-schedule")
-    public String saveDeleteSchedule(@RequestParam("scheduleId") Long scheduleId, Model model)
+    public String deleteSchedule(@RequestParam("scheduleId") Long scheduleId, Model model)
             throws SQLException {
         try {
             timetableService.delete(scheduleId);
