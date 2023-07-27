@@ -24,10 +24,7 @@ public class WebSecurityConfiguration {
             "/webjars/**",
             "/css/**",
             "/js/**",
-            "/images/**",
-            "/courses",
-            "/groups",
-            "/timetables"
+            "/images/**"
     };
 
     @Autowired
@@ -39,12 +36,13 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        
+                        .requestMatchers("/courses", "/timetables", "/groups").hasAnyRole("ADMIN", "STAFF", "TEACHER", "STUDENT")
                         .requestMatchers("/update-course", "/add-course", "/timetables/**").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers("/students/**").hasAnyRole("STUDENT", "ADMIN", "STAFF")
-                        .requestMatchers("/admin/**", "/delete-course", "/rooms").hasRole("ADMIN")
-                        .requestMatchers("/staff/**").hasRole("STAFF")
-                        .requestMatchers("/teachers/**").hasRole("TEACHER")
+                        .requestMatchers("/admin/**", "/delete-course", "/rooms", "/welcome-admin").hasRole("ADMIN")
+                        .requestMatchers("/staff/**", "/welcome-staff").hasRole("STAFF")
+                        .requestMatchers("/teachers/**", "/welcome-teacher").hasRole("TEACHER")
+                        .requestMatchers("/welcome-student").hasRole("STUDENT")
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.passwordParameter("password")
