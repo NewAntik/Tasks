@@ -25,7 +25,6 @@ public class WebSecurityConfiguration {
             "/css/**",
             "/js/**",
             "/images/**",
-            "/students/{groupId}",
             "/courses",
             "/groups",
             "/timetables"
@@ -40,11 +39,11 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers("/students").hasAnyRole("ADMIN", "STAFF", "STUDENT")
-                        .requestMatchers("/update-course","/add-course", "/timetables/**").hasAnyRole("ADMIN", "STAFF")
+                        
+                        .requestMatchers("/update-course", "/add-course", "/timetables/**").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/students/**").hasAnyRole("STUDENT", "ADMIN", "STAFF")
                         .requestMatchers("/admin/**", "/delete-course", "/rooms").hasRole("ADMIN")
                         .requestMatchers("/staff/**").hasRole("STAFF")
-                        .requestMatchers("/students/**").hasRole("STUDENT")
                         .requestMatchers("/teachers/**").hasRole("TEACHER")
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->

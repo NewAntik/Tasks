@@ -23,6 +23,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @WebMvcTest(controllers = {StudentController.class})
 @Import(WebSecurityConfiguration.class)
@@ -64,6 +66,6 @@ class StudentControllerTest {
     void getStudentWelcome_shouldShowStudentWelcomePage() throws Exception {
         mvc.perform(get("/welcome-student"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Hello student")));
+                .andExpect(view().name("students/welcome"));
     }
 }
