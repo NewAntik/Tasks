@@ -1,6 +1,7 @@
 package ua.foxminded.bootstrap.dao;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,7 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
     Timetable findByCourseId(@Param("id")Long id);
     
     @Query("SELECT t FROM Timetable t JOIN t.teacher a WHERE a.id =:id ORDER BY t.id")
-    Timetable findByTeacherId(@Param("id")Long id);
+    List<Timetable> findByTeacherId(@Param("id")Long id);
     
     @Query("SELECT t FROM Timetable t JOIN t.room r WHERE r.id =:id ORDER BY t.id")
     Timetable findByRoomId(@Param("id")Long id);
@@ -26,7 +27,7 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
     Timetable findByGroupId(@Param("id")Long id);
     
     @Query("SELECT t FROM Timetable t JOIN t.group g JOIN g.students s WHERE s.id = :id")
-    Timetable findByStudentId(@Param("id")Long id);
+    List<Timetable> findByStudentId(@Param("id")Long id);
     
     @Query("SELECT t FROM Timetable t JOIN t.room r WHERE r.id = :roomId AND t.lessonNum = :lessonNum AND t.date = :date")
     Optional<Timetable> findByRoomLessonData(@Param("roomId") Long roomId, @Param("lessonNum") Long lessonNum, @Param("date") LocalDate date);

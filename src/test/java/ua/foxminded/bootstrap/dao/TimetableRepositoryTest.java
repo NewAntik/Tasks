@@ -3,6 +3,7 @@ package ua.foxminded.bootstrap.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,8 @@ class TimetableRepositoryTest {
     
     @Test
     void findByGroupLessonData_ShouldReturnTimetableByGroupLessonData() {
-        Optional<Timetable> timetable = timetableRep.findByGroupLessonData(2L, 4l, LocalDate.of(2023, 06, 22));
-        assertEquals(2, timetable.get().getId());
+        Optional<Timetable> timetable = timetableRep.findByGroupLessonData(3L, 3l, LocalDate.of(2023, 06, 23));
+        assertEquals(3, timetable.get().getId());
     }
     
     @Test
@@ -49,8 +50,8 @@ class TimetableRepositoryTest {
 
     @Test
     void findByStudentId_ShouldReturnTimetableByStudentId() {
-        Timetable timetable = timetableRep.findByStudentId(2L);
-        assertEquals(1, timetable.getId());
+       List<Timetable> timetables = timetableRep.findByStudentId(2L);
+        assertEquals(2, timetables.size());
     }
     
     @Test
@@ -61,8 +62,8 @@ class TimetableRepositoryTest {
     
     @Test
     void findByTeacherId_ShouldReturnTimetableByTeacherId() {
-        Timetable timetable = timetableRep.findByTeacherId(5L);
-        assertEquals(2, timetable.getId());
+        List<Timetable> timetables = timetableRep.findByTeacherId(3L);
+        assertEquals(2, timetables.size());
     }
     
     @Test
