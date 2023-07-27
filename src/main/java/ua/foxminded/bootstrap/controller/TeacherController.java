@@ -41,7 +41,7 @@ public class TeacherController {
             if(teacher.getSpecialization().isEmpty()) {
                 throw new IllegalArgumentException("This teacher doesn't have any specialization!");
             } else {
-                model.addAttribute("teacherName", teacher.getFirstName());
+                model.addAttribute("teacherFirstName", teacher.getFirstName());
                 model.addAttribute("specializations", teacher.getSpecialization());
                 
                 return "teachers/its-courses";
