@@ -17,16 +17,25 @@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Specialization</th>
+                            <th>Its specializations</th>
+                            <th>Its schedule</th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                         <tr th:each="teacher : ${teachers}">
                             <td th:text="${teacher.id}"></td>
-                            <td><a
-                                th:href="@{/specializations/{teacherId}(teacherId=${teacher.id})}"
-                                th:text="${teacher.firstName}"></a></td>
+                            <td th:text="${teacher.firstName}"></td>
                             <td th:text="${teacher.lastName}"></td>
-                            <td th:text="${#strings.setJoin(teacher.specialization,',')}"></td>
+                            <td th:text="${#strings.setJoin(teacher.specialization, ', ')}"></td>
+                            <td>
+                                <a th:href="@{/specialisations/{teacherId}(teacherId=${teacher.id})}" 
+                                   th:text="Specializations"></a>
+                            </td>
+                            <td>
+                                <a th:href="@{/teacher-schedule/{teacherId}(teacherId=${teacher.id})}" 
+                                   th:text="Schedules"></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

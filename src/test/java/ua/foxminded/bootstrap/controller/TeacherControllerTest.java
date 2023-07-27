@@ -42,10 +42,10 @@ class TeacherControllerTest {
 
         when(teacherServ.findById(teacherId)).thenReturn(new Teacher("teacher1", "1234", "Yakof", "Jorson", specializations));
 
-        mvc.perform(get("/specializations/{teacherId}", teacherId))
+        mvc.perform(get("/specialisations/{teacherId}", teacherId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("teachers/its-courses"))
-                .andExpect(model().attributeExists("teacherName", "specializations"))
+                .andExpect(model().attributeExists("teacherFirstName", "specializations"))
                 .andExpect(model().attribute("specializations", specializations));
     }
     

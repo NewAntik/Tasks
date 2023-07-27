@@ -13,6 +13,12 @@ public interface TimetableService {
     @Transactional(readOnly = true)
     List<Timetable> findAll();
     
+    @Transactional(readOnly = true)
+    List<Timetable> findByStudentId(Long studentId);
+    
+    @Transactional(readOnly = true)
+    List<Timetable> findByTeacherId(Long teacherId);
+    
     @Transactional
     List<Timetable> saveAll(List<Timetable> timetables) throws SQLException;
     

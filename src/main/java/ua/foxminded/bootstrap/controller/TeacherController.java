@@ -34,7 +34,7 @@ public class TeacherController {
         return "teachers/welcome";
     }
     
-    @GetMapping("/specializations/{teacherId}")
+    @GetMapping("/specialisations/{teacherId}")
     public String getTeacherTable(@PathVariable Long teacherId, Model model) throws SQLException {
         Teacher teacher = teacherServ.findById(teacherId);
         try {

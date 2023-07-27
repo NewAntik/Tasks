@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/general::head}" />
+<body>
+    <div style="height: 100px;"></div>
+
+    <div class="grid text-center">
+        <p class="text-success" style="font-size: 45px;" th:text="${studentFirstName}">Student name</p>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Room</th>
+                            <th>Date</th>
+                            <th>Teacher</th>
+                            <th>Course</th>
+                            <th>Group</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="schedule : ${schedules}">
+                            <td th:text="${schedule.id}"></td>
+                            <td th:text="${schedule.room}"></td>
+                            <td th:text="${schedule.date}"></td>
+                            <td th:text="${schedule.teacher}"></td>
+                            <td th:text="${schedule.course}"></td>
+                            <td th:text="${schedule.group}"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,6 +2,10 @@ package ua.foxminded.bootstrap.controller;
 
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -19,7 +23,10 @@ import ua.foxminded.bootstrap.models.Course;
 import ua.foxminded.bootstrap.models.Group;
 import ua.foxminded.bootstrap.models.Room;
 import ua.foxminded.bootstrap.models.Teacher;
+import ua.foxminded.bootstrap.models.Student;
 import ua.foxminded.bootstrap.models.Timetable;
+import ua.foxminded.bootstrap.service.StudentService;
+import ua.foxminded.bootstrap.service.TeacherService;
 import ua.foxminded.bootstrap.service.TimetableService;
 import ua.foxminded.bootstrap.service.UserService;
 
@@ -39,7 +46,68 @@ class TimetableControllerTest {
     TimetableService timetableServ;
     
     @MockBean
+    StudentService studentService;
+    
+    @MockBean
+    TeacherService teacherService;
+    
+    @MockBean
     UserService userService;
+    
+    @Test
+    @WithMockUser(roles = "STUDENT")
+    void getStudentSchedules_ShouldShowAllStudentSchedules() throws Exception { 
+        Long studentId = 1L;
+        Room room = new Room("Room #1");
+        Group group = new Group("AA-01");
+        Course course = new Course("Math", "Description");
+        Set<Course> specializations = new HashSet<>();
+        specializations.add(course);
+        Teacher teacher = new Teacher("teacher1", "1234", "Yakof", "Jorson", specializations);
+        Student student = new Student ("student1", "1234", "Arnold", "Harison", group);
+        
+        List<Timetable> schedules = Arrays.asList(
+                new Timetable(1L, room, group, teacher, course, LocalDate.of(1111, 1, 11), 1L),
+                new Timetable(2L, room, group, teacher, course, LocalDate.of(2222, 2, 22), 2L)
+            );
+
+        when(timetableServ.findByStudentId(studentId)).thenReturn(schedules);
+        when(studentService.findById(studentId)).thenReturn(student);
+
+        mvc.perform(get("/student-schedule/{studentId}", studentId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("timetables/student-relation"))
+                .andExpect(model().attributeExists("studentFirstName", "schedules"))
+                .andExpect(model().attribute("schedules", schedules));
+    }
+    
+    @Test
+    @WithMockUser(roles = "TEACHER")
+    void getTeacherSchedules_ShouldShowAllTeacherSchedules() throws Exception { 
+        Long teacherId = 1L;
+        Room room = new Room("Room #1");
+        Group group = new Group("AA-01");
+        Course course = new Course("Math", "Description");
+        Set<Course> specializations = new HashSet<>();
+        specializations.add(course);
+        
+        Teacher teacher = new Teacher("teacher1", "1234", "Yakof", "Jorson", specializations);
+        
+        List<Timetable> schedules = Arrays.asList(
+                new Timetable(1L, room, group, teacher, course, LocalDate.of(1111, 1, 11), 1L),
+                new Timetable(2L, room, group, teacher, course, LocalDate.of(2222, 2, 22), 2L)
+            );
+
+        when(timetableServ.findByTeacherId(teacherId)).thenReturn(schedules);
+        when(teacherService.findById(teacherId)).thenReturn(teacher);
+
+        mvc.perform(get("/teacher-schedule/{teacherId}", teacherId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("timetables/teacher-relation"))
+                .andExpect(model().attributeExists("teacherFirstName", "schedules"))
+                .andExpect(model().attribute("schedules", schedules));
+    }
+    
     
     @Test
     @WithMockUser(roles = "STAFF")

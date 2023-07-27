@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -44,6 +45,26 @@ class TimetableServiceImplTest {
 
     @Autowired
     TimetableService timetableService;
+    
+    @Test
+    void findByTeacherId_ShouldTrewIllegalArgumentExceptionReletionTeacherToScheduleDoesntExist() {
+        when(timetableRepository.findByTeacherId(1L)).thenReturn(new ArrayList<>());
+
+        Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
+            timetableService.findByTeacherId(1L); 
+        });
+        assertNotNull(thrown.getMessage());
+    }
+    
+    @Test
+    void findByStudentId_ShouldTrewIllegalArgumentExceptionReletionStudentToScheduleDoesntExist() {
+        when(timetableRepository.findByStudentId(1L)).thenReturn(new ArrayList<>());
+
+        Throwable thrown = assertThrows(IllegalArgumentException.class,() ->{
+            timetableService.findByStudentId(1L); 
+        });
+        assertNotNull(thrown.getMessage());
+    }
     
     @Test
     void delete_ShouldDeleteTimetable() throws SQLException {

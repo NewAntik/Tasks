@@ -42,6 +42,16 @@ public class Timetable {
     public Timetable(Long lessonNum) {
         this.lessonNum = lessonNum;
     }
+    
+    public Timetable(Long id, Room room, Group group, Teacher teacher, Course course, LocalDate date, Long lessonNum) {
+        this.id = id;
+        this.room = room;
+        this.group = group;
+        this.teacher = teacher;
+        this.course = course;
+        this.date = date;
+        this.lessonNum = lessonNum;
+    }
 
     public Timetable(Room room, Group group, Teacher teacher, Course course, LocalDate date, Long lessonNum) {
         this.room = room;

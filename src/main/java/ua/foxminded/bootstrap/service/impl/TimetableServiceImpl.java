@@ -98,4 +98,24 @@ public class TimetableServiceImpl implements TimetableService {
         courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Course with this id " + courseId + " doesn't exist!"));
     }
+
+    @Override
+    public List<Timetable> findByStudentId(Long studentId) {
+        List<Timetable> timetables = timetableRepository.findByStudentId(studentId);
+        if(timetables.isEmpty()) {
+            throw new IllegalArgumentException("Any timetable with this student id: " + studentId + " doesn't exist!");
+        } else {
+            return timetables;
+        }
+    }
+
+    @Override
+    public List<Timetable> findByTeacherId(Long teacherId) {
+        List<Timetable> timetables = timetableRepository.findByTeacherId(teacherId);
+        if(timetables.isEmpty()) {
+            throw new IllegalArgumentException("Any timetable with this teacher id: " + teacherId + " doesn't exist!");
+        } else {
+            return timetables;
+        }
+    }
 }

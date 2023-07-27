@@ -40,9 +40,10 @@ public class WebSecurityConfiguration {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(WHITE_LIST_URLS).permitAll()
+                        .requestMatchers("/students").hasAnyRole("ADMIN", "STAFF", "STUDENT")
                         .requestMatchers("/update-course","/add-course", "/timetables/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/admin/**", "/delete-course", "/rooms", "/students").hasRole("ADMIN")
-                        .requestMatchers("/staff/**", "/students").hasRole("STAFF")
+                        .requestMatchers("/admin/**", "/delete-course", "/rooms").hasRole("ADMIN")
+                        .requestMatchers("/staff/**").hasRole("STAFF")
                         .requestMatchers("/students/**").hasRole("STUDENT")
                         .requestMatchers("/teachers/**").hasRole("TEACHER")
                         .anyRequest().authenticated())
