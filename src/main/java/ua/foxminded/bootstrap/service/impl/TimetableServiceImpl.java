@@ -35,7 +35,8 @@ public class TimetableServiceImpl implements TimetableService {
     @Override
     public Timetable add(Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum)
             throws SQLException {
-        checkDataExistins(roomId, groupId, teacherId, courseId);
+        checkDataExist(roomId, groupId, teacherId, courseId);
+        checkReletions(roomId, groupId, teacherId, courseId, date, lessonNum);
 
         return timetableRepository.save(new Timetable(roomRepository.findById(roomId).get(), groupRepository.findById(groupId).get(),
                 teacherRepository.findById(teacherId).get(), courseRepository.findById(courseId).get(), date, lessonNum));
@@ -53,10 +54,41 @@ public class TimetableServiceImpl implements TimetableService {
 
     @Override
     public void delete(Long id) throws SQLException {
-        timetableRepository.deleteById(id);
+        checkById(id);
+        timetableRepository.deleteById(id);        
     }
     
-    private void checkDataExistins(Long roomId, Long groupId, Long teacherId, Long courseId) {
+
+    @Override
+    public void update(Long scheduleId, Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum) throws SQLException {
+        Timetable tableFromDb = checkById(scheduleId);
+        checkDataExist(roomId, groupId, teacherId, courseId);
+        checkReletions(roomId, groupId, teacherId, courseId, date, lessonNum);
+        
+        tableFromDb.setRoom(roomRepository.findById(roomId).get());
+        tableFromDb.setGroup(groupRepository.findById(groupId).get());
+        tableFromDb.setTeacher(teacherRepository.findById(teacherId).get());
+        tableFromDb.setCourse(courseRepository.findById(courseId).get());
+        tableFromDb.setDate(date);
+        tableFromDb.setLessonNum(lessonNum);
+
+        timetableRepository.save(tableFromDb);
+    }
+    
+    private void checkReletions(Long roomId, Long groupId, Long teacherId, Long courseId, LocalDate date, Long lessonNum) {
+        timetableRepository.findByCourseLessonData(courseId, lessonNum, date).ifPresent(timetable -> {throw new IllegalArgumentException("Reletion course with this lessons and date already exist!");});
+        timetableRepository.findByTeacherLessonData(teacherId, lessonNum, date).ifPresent(timetable -> {throw new IllegalArgumentException("Reletion teacher with this lessons and date already exist!");});
+        timetableRepository.findByRoomLessonData(roomId, lessonNum, date).ifPresent(timetable -> {throw new IllegalArgumentException("Reletion room with this lessons and date already exist!");});
+        timetableRepository.findByGroupLessonData(groupId, lessonNum, date).ifPresent(timetable -> {throw new IllegalArgumentException("Reletion group with this lessons and date already exist!");});
+
+    }
+
+    private Timetable checkById(Long scheduleId) throws SQLException {
+        return timetableRepository.findById(scheduleId)
+        .orElseThrow(() -> new IllegalArgumentException("Schedule with this id " + scheduleId + " doesn't exist!"));
+    }
+    
+    private void checkDataExist(Long roomId, Long groupId, Long teacherId, Long courseId) {
         roomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("Room with this id " + roomId + " doesn't exist!"));
         groupRepository.findById(groupId)
@@ -65,5 +97,25 @@ public class TimetableServiceImpl implements TimetableService {
                 .orElseThrow(() -> new IllegalArgumentException("Teacher with this id " + teacherId + " doesn't exist!"));
         courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Course with this id " + courseId + " doesn't exist!"));
+    }
+
+    @Override
+    public List<Timetable> findByStudentId(Long studentId) {
+        List<Timetable> timetables = timetableRepository.findByStudentId(studentId);
+        if(timetables.isEmpty()) {
+            throw new IllegalArgumentException("Any timetable with this student id: " + studentId + " doesn't exist!");
+        } else {
+            return timetables;
+        }
+    }
+
+    @Override
+    public List<Timetable> findByTeacherId(Long teacherId) {
+        List<Timetable> timetables = timetableRepository.findByTeacherId(teacherId);
+        if(timetables.isEmpty()) {
+            throw new IllegalArgumentException("Any timetable with this teacher id: " + teacherId + " doesn't exist!");
+        } else {
+            return timetables;
+        }
     }
 }

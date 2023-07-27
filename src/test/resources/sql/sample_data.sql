@@ -33,11 +33,9 @@ VALUES (1, 'admin', '1234', 'admin', 'ADMIN', null, 'Admin', 'Admin'),
        (7, 'teacher7', '1237', 'teacher', 'TEACHER', null, 'Makama', 'Roy');
        
 INSERT INTO timetables (id, room_ref, course_ref, group_ref, teacher_ref, date_ref, lesson_num)
-VALUES (1, 1, 100, 1, 1, '2023-06-22 19:10:25-07', 5),
-       (2, 2, 101, 2, 2, '2023-06-22 19:10:25-07', 4),
-       (3, 3, 102, 3, 4, '2023-06-22 19:10:25-07', 3),
-       (4, 4, 103, 4, 4, '2023-06-22 19:10:25-07', 6),
-       (5, 5, 104, 5, 5,'2023-06-22 19:10:25-07', 8);
+VALUES (1, 1, 100, 1, 3, '2023-06-22', 5),
+       (2, 2, 101, 1, 3, '2023-06-21', 4),
+       (3, 3, 102, 3, 7, '2023-06-23', 3);
 
 
 INSERT INTO teachers_courses (teacher_ref, course_ref)

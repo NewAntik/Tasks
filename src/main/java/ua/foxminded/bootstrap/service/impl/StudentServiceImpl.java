@@ -20,7 +20,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public StudentServiceImpl(StudentRepository studentRepository, PasswordEncoder passwordEncoder, GroupRepository groupRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, PasswordEncoder passwordEncoder,
+            GroupRepository groupRepository) {
         this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
         this.groupRepository = groupRepository;
@@ -30,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findStudentsRelatedCourseByName(String courseName) throws SQLException {
         return studentRepository.findByCourseName(courseName);
     }
-    
+
     @Override
     public void delete(Long id) throws SQLException {
         studentRepository.deleteById(id);
@@ -47,15 +48,24 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Optional<Student> addNewStudent(String login, String password, String firstName, String lastName, Long groupId) {
+    public Optional<Student> addNewStudent(String login, String password, String firstName, String lastName,
+            Long groupId) {
         if (groupId == null || groupId == 0) {
             throw new IllegalArgumentException("Group Id should be mentiont!");
         }
         studentRepository.findByLogin(login).ifPresent(student -> {
             throw new IllegalArgumentException("Student with this login \"" + login + "\" already exists!");
         });
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NullPointerException("Group with this id \"" + groupId + "\" doesn't exist!" ));
-        
-        return Optional.of(studentRepository.save(new Student(login, passwordEncoder.encode(password), firstName, lastName, group)));
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new NullPointerException("Group with this id \"" + groupId + "\" doesn't exist!"));
+
+        return Optional.of(studentRepository
+                .save(new Student(login, passwordEncoder.encode(password), firstName, lastName, group)));
+    }
+
+    @Override
+    public Student findById(Long studentId) {
+        return studentRepository.findById(studentId).orElseThrow(
+                () -> new IllegalArgumentException("Student with this id: " + studentId + " doesn't exist!"));
     }
 }

@@ -20,18 +20,27 @@ import ua.foxminded.bootstrap.models.Student;
 import ua.foxminded.bootstrap.models.utils.Role;
 import ua.foxminded.bootstrap.security.SecuritySharedConfiguration;
 
-
-@SpringBootTest(classes = {StudentServiceImpl.class, SecuritySharedConfiguration.class})
+@SpringBootTest(classes = { StudentServiceImpl.class, SecuritySharedConfiguration.class })
 class StudentServiceImplTest {
-   
+
     @MockBean
     GroupRepository groupRepository;
-    
+
     @MockBean
     StudentRepository studentRepository;
-    
+
     @Autowired
     StudentServiceImpl studentServiceImpl;
+
+    @Test
+    void findById_ShouldThrewIllegalArgumentExceptionStudentDoesntExist() {
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+        
+        Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+            studentServiceImpl.findById(1L);
+        });
+        assertNotNull(thrown.getMessage());
+    }
 
     @Test
     void addStudent_ShouldAddNewStudentWithStudentRole() throws SQLException {
@@ -39,13 +48,14 @@ class StudentServiceImplTest {
         Student user = new Student("student1", "1234", "Student", "Student", group);
         when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
         when(studentRepository.save(user)).thenReturn(user);
-        
-        Optional<Student> studentAfterSave = studentServiceImpl.addNewStudent("teacher1", "1234", "Teacher", "Teacher", 1L);
-        
+
+        Optional<Student> studentAfterSave = studentServiceImpl.addNewStudent("teacher1", "1234", "Teacher", "Teacher",
+                1L);
+
         verify(studentRepository).save(user);
         assertEquals(Role.STUDENT, studentAfterSave.get().getRole());
     }
-    
+
     @Test
     void addStudent_ShouldThrewIllegalArgumentExceptionGroupDoesntExist() {
         when(groupRepository.findById(1L)).thenReturn(Optional.empty());
@@ -55,7 +65,7 @@ class StudentServiceImplTest {
         });
         assertNotNull(thrown.getMessage());
     }
-    
+
     @Test
     void addStudent_ShouldThrewIllegalArgumentExceptionStudentAlreadyExist() {
         when(studentRepository.findByLogin("student1")).thenReturn(Optional.of(new Student("student1", "1234", "Student", "Student", new Group())));
@@ -65,7 +75,7 @@ class StudentServiceImplTest {
         });
         assertNotNull(thrown.getMessage());
     }
-    
+
     @Test
     void addStudent_ShouldThrewIllegalArgumentExceptionGroupIdEqualsNull() {
         when(studentRepository.findByLogin("student1")).thenReturn(Optional.of(new Student("student1", "1234", "Student", "Student", new Group())));
@@ -75,9 +85,9 @@ class StudentServiceImplTest {
         });
         assertNotNull(thrown.getMessage());
     }
-    
+
     @Test
-    void addStudent_ShouldThrewIllegalArgumentExceptionGroupIdEqualsZero() {        
+    void addStudent_ShouldThrewIllegalArgumentExceptionGroupIdEqualsZero() {
         Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
             studentServiceImpl.addNewStudent("student1", "1234", "Student", "Student", 0L);
         });

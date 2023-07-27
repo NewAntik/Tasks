@@ -34,14 +34,14 @@ public class TeacherController {
         return "teachers/welcome";
     }
     
-    @GetMapping("/specializations/{teacherId}")
+    @GetMapping("/specialisations/{teacherId}")
     public String getTeacherTable(@PathVariable Long teacherId, Model model) throws SQLException {
         Teacher teacher = teacherServ.findById(teacherId);
         try {
             if(teacher.getSpecialization().isEmpty()) {
-                throw new IllegalArgumentException("This reletion teacher doesn't have any specialization exist!");
+                throw new IllegalArgumentException("This teacher doesn't have any specialization!");
             } else {
-                model.addAttribute("teacherName", teacher.getFirstName());
+                model.addAttribute("teacherFirstName", teacher.getFirstName());
                 model.addAttribute("specializations", teacher.getSpecialization());
                 
                 return "teachers/its-courses";
