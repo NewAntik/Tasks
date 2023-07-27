@@ -25,4 +25,7 @@ public interface StudentService {
 
     @Transactional
     Optional<Student> addNewStudent(String login, String password, String firstName, String lastName, Long groupId);
+
+    @Transactional(readOnly = true)
+    Student findById(Long studentId);
 }
