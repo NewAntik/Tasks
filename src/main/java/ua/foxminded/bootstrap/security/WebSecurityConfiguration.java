@@ -43,6 +43,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/staff/**", "/welcome-staff").hasRole("STAFF")
                         .requestMatchers("/teachers/**", "/welcome-teacher").hasRole("TEACHER")
                         .requestMatchers("/welcome-student").hasRole("STUDENT")
+                        .requestMatchers("/anonymous").anonymous()
                         .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.passwordParameter("password")
