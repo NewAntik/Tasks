@@ -34,6 +34,21 @@ class CourseControllerTest {
     MockMvc mvc;
     
     @Test
+    void getAnonymousPage_shouldShowListOfCoursesForAnonymous() throws Exception {
+        when(courseServ.findAll()).thenReturn(Arrays.asList(
+                
+                new Course("Math", "Math Description"),
+                new Course("Biology", "Biology Description"),
+                new Course("Geografy", "Geografy Description")
+        ));
+        mvc.perform(get("/anonymous"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Math")))
+                .andExpect(content().string(containsString("Biology")))
+                .andExpect(content().string(containsString("Geografy")));
+    }
+    
+    @Test
     @WithMockUser(roles = "STAFF")
     void reassignTeacherToCourse_ShouldReassignTeacherToCourse() throws Exception {
         mvc.perform(post("/reassign-teacher")
