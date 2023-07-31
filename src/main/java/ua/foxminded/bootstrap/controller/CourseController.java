@@ -72,6 +72,14 @@ public class CourseController {
         return "courses/assign-group";
     }
     
+    @GetMapping("/anonymous")
+    public String getAnonymouspage(Model model) throws SQLException {
+        List<Course> courses = courseService.findAll();
+        model.addAttribute("courses", courses);
+        
+        return "courses/anonymous";
+    }
+    
     @GetMapping("/assign-teacher-page")
     public String getAssignTeacherPage() throws SQLException {
         return "courses/assign-teacher";
